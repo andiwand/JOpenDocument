@@ -36,8 +36,10 @@ public class HtmlPageOdt {
 	public void save(File file) throws IOException {
 		FileWriter writer = new FileWriter(file);
 		
+		writer.append("<?xml version=\"1.0\" encoding=\"UTF-8\"?>");
 		writer.append(htmlDocument.toString());
 		
+		writer.flush();
 		writer.close();
 	}
 	public void save(String file) throws IOException {

@@ -77,6 +77,16 @@ public class TranslatorOdt {
 	private Node handleStyle(Node style) {
 		Node head = new Node("head");
 		
+		/*Node meta = new Node("meta");
+		meta.addAttribute(new Attribute("http-equiv", "Content-Type"));
+		meta.addAttribute(new Attribute("content", "text/html; charset=utf-8"));
+		
+		head.addChild(meta);*/
+		
+		Node title = new Node("title");
+		title.addChild(new Content("Odt Translator"));
+		head.addChild(title);
+		
 		Node css = new Node("style");
 		css.addAttribute(new Attribute("type", "text/css"));
 		css.addAttribute(new Attribute("media", "screen"));
@@ -165,46 +175,6 @@ public class TranslatorOdt {
 				parent.addChild(new Content(newContent));
 			}
 		}
-	}
-	
-	
-	
-	public static void main(String[] args) throws Throwable {
-		OpenDocumentText documentText = new OpenDocumentText("/home/andreas/test.odt");
-		TranslatorOdt translatorOdt = new TranslatorOdt(documentText);
-		
-		translatorOdt.addStyleNodeTranslator("text-properties", new StyleNodeTranslator(
-				new StyleSubstitution("font-size", "font-size")
-		));
-		translatorOdt.addStyleNodeTranslator("table-properties", new TableStyleNodeTranslator(
-				new StyleSubstitution("width", "width")
-		));
-		translatorOdt.addStyleNodeTranslator("table-column-properties", new StyleNodeTranslator(
-				new StyleSubstitution("column-width", "width")
-		));
-		translatorOdt.addStyleNodeTranslator("table-cell-properties", new StyleNodeTranslator(
-				new StyleSubstitution("padding", "padding"),
-				new StyleSubstitution("border", "border"),
-				new StyleSubstitution("border-top", "border-top"),
-				new StyleSubstitution("border-right", "border-right"),
-				new StyleSubstitution("border-bottom", "border-bottom"),
-				new StyleSubstitution("border-left", "border-left")
-		));
-		
-		translatorOdt.addNodeSubstitution(new NodeSubstitution("p", "p"));
-		translatorOdt.addNodeSubstitution(new NodeSubstitution("table", "table"));
-		translatorOdt.addNodeSubstitution(new NodeSubstitution("table-row", "tr"));
-		translatorOdt.addNodeSubstitution(new NodeSubstitution("table-cell", "td"));
-		translatorOdt.addNodeSubstitution(new NodeSubstitution("frame", "span"
-		));
-		
-		translatorOdt.addNodeTranslator("image", new ImageTranslator(documentText));
-		
-		translatorOdt.addAttributeTranslators("style-name", new ClassAttributeTranslator());
-		
-		HtmlPageOdt pageOdt = translatorOdt.translate(0);
-		System.out.println(pageOdt.getHtmlDocument());
-		pageOdt.save("/home/andreas/test.html");
 	}
 	
 }

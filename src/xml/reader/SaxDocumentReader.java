@@ -94,6 +94,8 @@ public class SaxDocumentReader extends XmlDocumentReader {
 			
 			activeNode.addChild(content);
 		}
+		
+		
 	}
 	
 }
