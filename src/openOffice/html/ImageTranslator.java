@@ -18,11 +18,22 @@ public class ImageTranslator implements NodeTranslator {
 	
 	private ImageCache imageCache;
 	
+	private URITranslator uriTranslator;
+	
 	
 	public ImageTranslator(OpenDocumentText documentText, ImageCache imageCache) {
 		this.documentText = documentText;
 		
 		this.imageCache = imageCache;
+	}
+	
+	
+	public URITranslator getUriTranslator() {
+		return uriTranslator;
+	}
+	
+	public void setUriTranslator(URITranslator uriTranslator) {
+		this.uriTranslator = uriTranslator;
 	}
 	
 	
@@ -33,11 +44,13 @@ public class ImageTranslator implements NodeTranslator {
 			InputStream inputStream = documentText.getElement(imageFile.getPath());
 			
 			File tmpFile = imageCache.newImage(imageFile.getName());
-			URI tmpFileUri = tmpFile.getAbsoluteFile().toURI();
 			FileOutputStream outputStream = new FileOutputStream(tmpFile);
 			
 			pipeImage(inputStream, outputStream);
 			
+			
+			URI tmpFileUri = tmpFile.getAbsoluteFile().toURI();
+			if (uriTranslator != null) tmpFileUri = uriTranslator.translate(tmpFileUri);
 			
 			Node img = new Node("img");
 			img.addAttribute(new Attribute("src", tmpFileUri.toString()));
