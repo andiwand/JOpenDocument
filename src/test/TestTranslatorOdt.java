@@ -3,12 +3,12 @@ package test;
 import java.io.File;
 
 import openOffice.OpenDocumentText;
-import openOffice.html.AttributeSubstitution;
 import openOffice.html.ClassAttributeTranslator;
 import openOffice.html.HtmlPageOdt;
 import openOffice.html.ImageCache;
 import openOffice.html.ImageTranslator;
 import openOffice.html.NodeSubstitution;
+import openOffice.html.StaticStyleSubstitution;
 import openOffice.html.StyleNodeTranslator;
 import openOffice.html.StyleSubstitution;
 import openOffice.html.TableStyleNodeTranslator;
@@ -28,7 +28,10 @@ public class TestTranslatorOdt {
 		TranslatorOdt translatorOdt = new TranslatorOdt(documentText);
 		
 		translatorOdt.addStyleNodeTranslator("text-properties", new StyleNodeTranslator(
-				new StyleSubstitution("font-size", "font-size")
+				new StyleSubstitution("font-size", "font-size"),
+				new StyleSubstitution("font-weight", "font-weight"),
+				new StyleSubstitution("font-style", "font-style"),
+				new StaticStyleSubstitution("text-underline-style", "text-decoration", "underline")
 		));
 		translatorOdt.addStyleNodeTranslator("table-properties", new TableStyleNodeTranslator(
 				new StyleSubstitution("width", "width")
@@ -50,10 +53,7 @@ public class TestTranslatorOdt {
 		translatorOdt.addNodeSubstitution(new NodeSubstitution("table", "table"));
 		translatorOdt.addNodeSubstitution(new NodeSubstitution("table-row", "tr"));
 		translatorOdt.addNodeSubstitution(new NodeSubstitution("table-cell", "td"));
-		translatorOdt.addNodeSubstitution(new NodeSubstitution("frame", "div",
-				new AttributeSubstitution("width", "width"),
-				new AttributeSubstitution("height", "height")
-		));
+		translatorOdt.addNodeSubstitution(new NodeSubstitution("frame", "div"));
 		
 		translatorOdt.addNodeTranslator("image", new ImageTranslator(documentText, imageCache));
 		

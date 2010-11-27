@@ -32,7 +32,6 @@ public class ImageTranslator implements NodeTranslator {
 			InputStream inputStream = documentText.getElement(imageFile.getPath());
 			
 			File tmpFile = imageCache.newImage(imageFile.getName());
-			System.out.println(tmpFile);
 			FileOutputStream outputStream = new FileOutputStream(tmpFile);
 			
 			pipeImage(inputStream, outputStream);
@@ -40,6 +39,7 @@ public class ImageTranslator implements NodeTranslator {
 			
 			Node img = new Node("img");
 			img.addAttribute(new Attribute("src", tmpFile.getAbsolutePath()));
+			img.addAttribute(new Attribute("alt", tmpFile.getAbsolutePath()));
 			
 			String style = "";
 			
