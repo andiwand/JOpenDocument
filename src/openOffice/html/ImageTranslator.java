@@ -5,6 +5,8 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
+import java.net.URI;
+import java.net.URISyntaxException;
 
 import openOffice.OpenDocumentText;
 import xml.Attribute;
@@ -28,6 +30,7 @@ public class ImageTranslator implements NodeTranslator {
 	public Node translateNode(Node source) {
 		try {
 			File imageFile = new File(source.findAttribute("href").getValue());
+			URI imageUri = new URI("file", null, imageFile.getAbsolutePath(), null);
 			
 			InputStream inputStream = documentText.getElement(imageFile.getPath());
 			
@@ -38,7 +41,7 @@ public class ImageTranslator implements NodeTranslator {
 			
 			
 			Node img = new Node("img");
-			img.addAttribute(new Attribute("src", tmpFile.getAbsolutePath()));
+			img.addAttribute(new Attribute("src", imageUri.toString()));
 			img.addAttribute(new Attribute("alt", tmpFile.getAbsolutePath()));
 			
 			String style = "";
@@ -54,6 +57,8 @@ public class ImageTranslator implements NodeTranslator {
 			
 			return img;
 		} catch (IOException e) {
+			e.printStackTrace();
+		} catch (URISyntaxException e) {
 			e.printStackTrace();
 		}
 		

@@ -53,7 +53,7 @@ public class TestTranslatorOdt {
 		translatorOdt.addNodeSubstitution(new NodeSubstitution("table", "table"));
 		translatorOdt.addNodeSubstitution(new NodeSubstitution("table-row", "tr"));
 		translatorOdt.addNodeSubstitution(new NodeSubstitution("table-cell", "td"));
-		translatorOdt.addNodeSubstitution(new NodeSubstitution("frame", "div"));
+		translatorOdt.addNodeSubstitution(new NodeSubstitution("frame", "span"));
 		
 		translatorOdt.addNodeTranslator("image", new ImageTranslator(documentText, imageCache));
 		
