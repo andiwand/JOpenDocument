@@ -71,7 +71,7 @@ public class SaxDocumentReader extends XmlDocumentReader {
 				String attributeQName = attributes.getQName(i);
 				
 				if (((attributeQName != null) && (attributeQName.length() == 0)) && (localName.length() != 0))
-					attributeQName = localName;
+					attributeQName = attributes.getLocalName(i);
 				
 				Attribute attribute = new Attribute(attributeQName, attributes.getValue(i));
 				
