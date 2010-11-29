@@ -64,6 +64,13 @@ public class SaxDocumentReader extends XmlDocumentReader {
 		public void startElement(String uri, String localName, String qName, Attributes attributes) throws SAXException {
 			Node newNode = new Node(qName);
 			
+			System.out.println("---");
+			System.out.println(uri);
+			System.out.println(localName);
+			System.out.println(qName);
+			System.out.println("---");
+			System.out.println();
+			
 			for (int i = 0; i < attributes.getLength(); i++) {
 				Attribute attribute = new Attribute(attributes.getQName(i));
 				attribute.setValue(attributes.getValue(i));
