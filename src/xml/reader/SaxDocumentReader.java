@@ -65,9 +65,9 @@ public class SaxDocumentReader extends XmlDocumentReader {
 			Node newNode = new Node(qName);
 			
 			System.out.println("---");
-			System.out.println(uri);
-			System.out.println(localName);
-			System.out.println(qName != null ? qName : "null");
+			System.out.println("uri: " + uri);
+			System.out.println("localName: " + localName);
+			System.out.println("qName: " + qName);
 			System.out.println("---");
 			System.out.println();
 			
