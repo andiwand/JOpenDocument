@@ -50,6 +50,7 @@ public class OpenDocumentText extends OpenDocumentFormat {
 			SaxDocumentReader saxReader = new SaxDocumentReader(inputStream);
 			
 			Document document = saxReader.readDocument();
+			System.out.println(document);
 			Node metaNode = document.getRoot().findChildNode("meta");
 			Node documentStatisticNode = metaNode.findChildNode("document-statistic");
 			Attribute pageCountAttribute = documentStatisticNode.findAttribute("page-count");
@@ -68,14 +69,6 @@ public class OpenDocumentText extends OpenDocumentFormat {
 	
 	public int getPageCount() {
 		return pageCount;
-	}
-	
-	
-	
-	public static void main(String[] args) throws FileNotFoundException, IOException {
-		OpenDocumentText textFile = new OpenDocumentText("/home/andreas/test.odt");
-		
-		System.out.println(textFile.getPageCount());
 	}
 	
 }
