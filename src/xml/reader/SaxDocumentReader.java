@@ -62,14 +62,9 @@ public class SaxDocumentReader extends XmlDocumentReader {
 		}
 		
 		public void startElement(String uri, String localName, String qName, Attributes attributes) throws SAXException {
-			Node newNode = new Node(qName);
+			if (((qName != null) && (qName.length() == 0)) && (localName.length() != 0)) qName = localName;
 			
-			System.out.println("---");
-			System.out.println("uri: " + uri);
-			System.out.println("localName: " + localName);
-			System.out.println("qName: " + qName);
-			System.out.println("---");
-			System.out.println();
+			Node newNode = new Node(qName);
 			
 			for (int i = 0; i < attributes.getLength(); i++) {
 				Attribute attribute = new Attribute(attributes.getQName(i));
