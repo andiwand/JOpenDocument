@@ -18,7 +18,7 @@ import openOffice.html.TranslatorOdt;
 public class TestTranslatorOdt {
 	
 	public static void main(String[] args) throws Throwable {
-		File file = new File("/home/andreas/test.odt");
+		File file = new File("/home/andreas/UE01.5_Protokoll.odt");
 		File tmp = new File("/home/andreas/tmp");
 		
 		
@@ -62,7 +62,12 @@ public class TestTranslatorOdt {
 		translatorOdt.addAttributeTranslators("style-name", new ClassAttributeTranslator());
 		
 		HtmlPageOdt pageOdt = translatorOdt.translate(0);
-		pageOdt.save(new File(file.getParentFile(), file.getName().replaceAll("(?<=.*)\\..*", ".html")));
+		
+		String htmlFileName = file.getName();
+		int lastDot = htmlFileName.lastIndexOf(".");
+		if (lastDot != -1) htmlFileName = htmlFileName.substring(0, lastDot);
+		htmlFileName += ".html";
+		pageOdt.save(new File(file.getParentFile(), htmlFileName));
 	}
 	
 }

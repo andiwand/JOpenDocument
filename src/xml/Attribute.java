@@ -115,13 +115,13 @@ public class Attribute extends XmlObject {
 	}
 	
 	public void setNamespace(String namespace) {
-		if (namespace.isEmpty()) throw new IllegalArgumentException("namespace is empty");
+		if (namespace.length() == 0) throw new IllegalArgumentException("namespace is empty");
 		
 		this.namespace = namespace;
 	}
 	public void setName(String name) {
 		if (name == null) throw new NullPointerException("name is null");
-		if (name.isEmpty()) throw new IllegalArgumentException("name is empty");
+		if (name.length() == 0) throw new IllegalArgumentException("name is empty");
 		
 		this.name = name;
 	}
