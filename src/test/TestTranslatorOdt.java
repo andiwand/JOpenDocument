@@ -4,7 +4,6 @@ import java.io.File;
 
 import openOffice.OpenDocumentText;
 import openOffice.html.ClassAttributeTranslator;
-import openOffice.html.HtmlPageOdt;
 import openOffice.html.ImageCache;
 import openOffice.html.ImageTranslator;
 import openOffice.html.NodeSubstitution;
@@ -12,7 +11,8 @@ import openOffice.html.StaticStyleSubstitution;
 import openOffice.html.StyleNodeTranslator;
 import openOffice.html.StyleSubstitution;
 import openOffice.html.TableStyleNodeTranslator;
-import openOffice.html.TranslatorOdt;
+import openOffice.html.odt.HtmlPageOdt;
+import openOffice.html.odt.TranslatorOdt;
 
 
 public class TestTranslatorOdt {

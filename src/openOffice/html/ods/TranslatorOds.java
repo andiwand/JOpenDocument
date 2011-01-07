@@ -1,4 +1,4 @@
-package openOffice.html;
+package openOffice.html.ods;
 
 import java.io.IOException;
 import java.util.HashMap;
@@ -6,9 +6,15 @@ import java.util.Map;
 
 import javax.xml.parsers.ParserConfigurationException;
 
+import openOffice.OpenDocumentSpreadsheet;
+import openOffice.html.AttributeSubstitution;
+import openOffice.html.AttributeTranslator;
+import openOffice.html.NodeSubstitution;
+import openOffice.html.NodeTranslator;
+import openOffice.html.StyleNodeTranslator;
+
 import org.xml.sax.SAXException;
 
-import openOffice.OpenDocumentText;
 import xml.Attribute;
 import xml.Content;
 import xml.Document;
@@ -18,7 +24,7 @@ import xml.RootNode;
 import xml.reader.SaxDocumentReader;
 
 
-public class TranslatorOdt {
+public class TranslatorOds {
 	
 	private Document document;
 	
@@ -28,8 +34,8 @@ public class TranslatorOdt {
 	private Map<String, AttributeTranslator> attributeTranslators;
 	
 	
-	public TranslatorOdt(OpenDocumentText documentText) throws ParserConfigurationException, SAXException, IOException {
-		SaxDocumentReader documentReader = new SaxDocumentReader(documentText.getContent());
+	public TranslatorOds(OpenDocumentSpreadsheet documentSpreadsheet) throws ParserConfigurationException, SAXException, IOException {
+		SaxDocumentReader documentReader = new SaxDocumentReader(documentSpreadsheet.getContent());
 		document = documentReader.readDocument();
 		
 		styleNodeTranslators = new HashMap<String, StyleNodeTranslator>();
@@ -58,8 +64,8 @@ public class TranslatorOdt {
 	}
 	
 	
-	public HtmlPageOdt translate(int page) {
-		HtmlPageOdt result = new HtmlPageOdt(page);
+	public HtmlPageOds translate() {
+		HtmlPageOds result = new HtmlPageOds();
 		
 		RootNode documentRoot = document.getRoot();
 		RootNode htmlRoot = result.getHtmlNode();

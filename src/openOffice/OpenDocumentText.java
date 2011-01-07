@@ -50,7 +50,6 @@ public class OpenDocumentText extends OpenDocumentFormat {
 			SaxDocumentReader saxReader = new SaxDocumentReader(inputStream);
 			
 			Document document = saxReader.readDocument();
-			System.out.println(document);
 			Node metaNode = document.getRoot().findChildNode("meta");
 			Node documentStatisticNode = metaNode.findChildNode("document-statistic");
 			Attribute pageCountAttribute = documentStatisticNode.findAttribute("page-count");

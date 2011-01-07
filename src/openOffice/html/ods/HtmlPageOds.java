@@ -1,4 +1,4 @@
-package openOffice.html;
+package openOffice.html.ods;
 
 import java.io.File;
 import java.io.FileWriter;
@@ -8,23 +8,16 @@ import xml.Document;
 import xml.RootNode;
 
 
-public class HtmlPageOdt {
-	
-	public final int page;
+public class HtmlPageOds {
 	
 	public final Document htmlDocument;
 	
 	
-	public HtmlPageOdt(int page) {
-		this.page = page;
-		
+	public HtmlPageOds() {
 		htmlDocument = new Document(new RootNode("html"));
 	}
 	
 	
-	public int getPage() {
-		return page;
-	}
 	public Document getHtmlDocument() {
 		return htmlDocument;
 	}
