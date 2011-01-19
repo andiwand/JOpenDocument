@@ -32,11 +32,11 @@ public class TestTranslatorOdt {
 		OpenDocumentText text = new OpenDocumentText(documentFile);
 		TranslatorOdt translatorOdt = new TranslatorOdt(text);
 		
-		HtmlPageOdt pageOdt = translatorOdt.translate(0);
-		
 		ImageTranslator imageTranslator = new ImageTranslator(text, imageCache);
 		//imageTranslator.setUriTranslator(new AndroidImageUriTranslator());
 		translatorOdt.addNodeTranslator("image", imageTranslator);
+		
+		HtmlPageOdt pageOdt = translatorOdt.translate(0);
 		
 		String htmlFileName = file.getName();
 		int lastDot = htmlFileName.lastIndexOf(".");

@@ -6,6 +6,8 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.util.Set;
 
+import openoffice.html.MimeTypeNotFoundException;
+
 
 public abstract class OpenDocumentFile {
 	
@@ -17,6 +19,8 @@ public abstract class OpenDocumentFile {
 	
 	public String getMimeType() throws IOException {
 		InputStream inputStream = getFile(MIMETYPE_PATH);
+		if (inputStream == null) throw new MimeTypeNotFoundException();
+		
 		BufferedReader reader = new BufferedReader(new InputStreamReader(inputStream));
 		
 		String mimeType = reader.readLine();
