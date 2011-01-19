@@ -1,31 +1,42 @@
 package test;
 
 import java.io.File;
+import java.io.FileInputStream;
 
-import openOffice.OpenDocumentText;
-import openOffice.html.ClassAttributeTranslator;
-import openOffice.html.ImageCache;
-import openOffice.html.ImageTranslator;
-import openOffice.html.NodeSubstitution;
-import openOffice.html.StaticStyleSubstitution;
-import openOffice.html.StyleNodeTranslator;
-import openOffice.html.StyleSubstitution;
-import openOffice.html.TableStyleNodeTranslator;
-import openOffice.html.odt.HtmlPageOdt;
-import openOffice.html.odt.TranslatorOdt;
+import javax.swing.JFileChooser;
+
+import openoffice.CachedOpenDocumentFile;
+import openoffice.OpenDocumentText;
+import openoffice.html.ClassAttributeTranslator;
+import openoffice.html.ImageCache;
+import openoffice.html.ImageTranslator;
+import openoffice.html.NodeSubstitution;
+import openoffice.html.StaticStyleSubstitution;
+import openoffice.html.StyleNodeTranslator;
+import openoffice.html.StyleSubstitution;
+import openoffice.html.TableStyleNodeTranslator;
+import openoffice.html.odt.HtmlPageOdt;
+import openoffice.html.odt.TranslatorOdt;
 
 
 public class TestTranslatorOdt {
 	
 	public static void main(String[] args) throws Throwable {
-		File file = new File("/home/andreas/UE01.5_Protokoll.odt");
+		JFileChooser fileChooser = new JFileChooser();
+		int option = fileChooser.showOpenDialog(null);
+		
+		if (option == JFileChooser.CANCEL_OPTION) return;
+		
+		File file = fileChooser.getSelectedFile();
 		File tmp = new File("/home/andreas/tmp");
 		
 		
 		ImageCache imageCache = new ImageCache(tmp, false);
 		
-		OpenDocumentText documentText = new OpenDocumentText(file);
-		TranslatorOdt translatorOdt = new TranslatorOdt(documentText);
+		FileInputStream inputStream = new FileInputStream(file);
+		CachedOpenDocumentFile documentFile = new CachedOpenDocumentFile(inputStream);
+		OpenDocumentText text = new OpenDocumentText(documentFile);
+		TranslatorOdt translatorOdt = new TranslatorOdt(text);
 		
 		translatorOdt.addStyleNodeTranslator("text-properties", new StyleNodeTranslator(
 				new StyleSubstitution("font-size", "font-size"),
@@ -55,7 +66,7 @@ public class TestTranslatorOdt {
 		translatorOdt.addNodeSubstitution(new NodeSubstitution("table-cell", "td"));
 		translatorOdt.addNodeSubstitution(new NodeSubstitution("frame", "span"));
 		
-		ImageTranslator imageTranslator = new ImageTranslator(documentText, imageCache);
+		ImageTranslator imageTranslator = new ImageTranslator(text, imageCache);
 		//imageTranslator.setUriTranslator(new AndroidImageUriTranslator());
 		translatorOdt.addNodeTranslator("image", imageTranslator);
 		

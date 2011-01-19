@@ -1,26 +1,38 @@
 package test;
 
 import java.io.File;
+import java.io.FileInputStream;
 
-import openOffice.OpenDocumentSpreadsheet;
-import openOffice.html.ClassAttributeTranslator;
-import openOffice.html.NodeSubstitution;
-import openOffice.html.StaticStyleSubstitution;
-import openOffice.html.StyleNodeTranslator;
-import openOffice.html.StyleSubstitution;
-import openOffice.html.TableStyleNodeTranslator;
-import openOffice.html.ods.HtmlPageOds;
-import openOffice.html.ods.TranslatorOds;
+import javax.swing.JFileChooser;
+
+import openoffice.CachedOpenDocumentFile;
+import openoffice.OpenDocumentSpreadsheet;
+import openoffice.html.AttributeSubstitution;
+import openoffice.html.ClassAttributeTranslator;
+import openoffice.html.NodeSubstitution;
+import openoffice.html.StaticStyleSubstitution;
+import openoffice.html.StyleNodeTranslator;
+import openoffice.html.StyleSubstitution;
+import openoffice.html.TableStyleNodeTranslator;
+import openoffice.html.ods.HtmlPageOds;
+import openoffice.html.ods.TranslatorOds;
 
 
 public class TestTranslatorOds {
 	
 	public static void main(String[] args) throws Throwable {
-		File file = new File("/home/andreas/test.ods");
+		JFileChooser fileChooser = new JFileChooser();
+		int option = fileChooser.showOpenDialog(null);
+		
+		if (option == JFileChooser.CANCEL_OPTION) return;
+		
+		File file = fileChooser.getSelectedFile();
 		
 		
-		OpenDocumentSpreadsheet documentSpreadsheet = new OpenDocumentSpreadsheet(file);
-		TranslatorOds translatorOds = new TranslatorOds(documentSpreadsheet);
+		FileInputStream inputStream = new FileInputStream(file);
+		CachedOpenDocumentFile documentFile = new CachedOpenDocumentFile(inputStream);
+		OpenDocumentSpreadsheet spreadsheet = new OpenDocumentSpreadsheet(documentFile);
+		TranslatorOds translatorOds = new TranslatorOds(spreadsheet);
 		
 		translatorOds.addStyleNodeTranslator("text-properties", new StyleNodeTranslator(
 				new StyleSubstitution("font-size", "font-size"),
@@ -30,6 +42,9 @@ public class TestTranslatorOds {
 		));
 		translatorOds.addStyleNodeTranslator("table-properties", new TableStyleNodeTranslator(
 				new StyleSubstitution("width", "width")
+		));
+		translatorOds.addStyleNodeTranslator("table-row-properties", new StyleNodeTranslator(
+				new StyleSubstitution("row-height", "height")
 		));
 		translatorOds.addStyleNodeTranslator("table-column-properties", new StyleNodeTranslator(
 				new StyleSubstitution("column-width", "width")
@@ -46,8 +61,16 @@ public class TestTranslatorOds {
 		translatorOds.addNodeSubstitution(new NodeSubstitution("p", "p"));
 		translatorOds.addNodeSubstitution(new NodeSubstitution("h", "p"));
 		translatorOds.addNodeSubstitution(new NodeSubstitution("table", "table"));
-		translatorOds.addNodeSubstitution(new NodeSubstitution("table-row", "tr"));
-		translatorOds.addNodeSubstitution(new NodeSubstitution("table-cell", "td"));
+		translatorOds.addNodeSubstitution(new NodeSubstitution("table-row", "tr",
+				new AttributeSubstitution("number-rows-repeated", "rowspan")
+		));
+		translatorOds.addNodeSubstitution(new NodeSubstitution("table-cell", "td",
+				new AttributeSubstitution("number-rows-repeated", "rowspan"),
+				new AttributeSubstitution("number-columns-repeated", "colspan")
+		));
+		translatorOds.addNodeSubstitution(new NodeSubstitution("table-column", "colgroup",
+				new AttributeSubstitution("number-columns-repeated", "span")
+		));
 		translatorOds.addNodeSubstitution(new NodeSubstitution("frame", "span"));
 		
 		translatorOds.addAttributeTranslators("style-name", new ClassAttributeTranslator());
