@@ -1,4 +1,4 @@
-package openoffice.html;
+package openoffice;
 
 
 public class MimeTypeNotFoundException extends RuntimeException {
