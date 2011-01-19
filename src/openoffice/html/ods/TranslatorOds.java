@@ -8,9 +8,13 @@ import javax.xml.parsers.ParserConfigurationException;
 
 import openoffice.html.AttributeSubstitution;
 import openoffice.html.AttributeTranslator;
+import openoffice.html.ClassAttributeTranslator;
 import openoffice.html.NodeSubstitution;
 import openoffice.html.NodeTranslator;
+import openoffice.html.StaticStyleSubstitution;
 import openoffice.html.StyleNodeTranslator;
+import openoffice.html.StyleSubstitution;
+import openoffice.html.TableStyleNodeTranslator;
 
 import org.xml.sax.SAXException;
 
@@ -43,6 +47,48 @@ public class TranslatorOds {
 		
 		translators = new HashMap<String, NodeTranslator>();
 		attributeTranslators = new HashMap<String, AttributeTranslator>();
+		
+		
+		addStyleNodeTranslator("text-properties", new StyleNodeTranslator(
+				new StyleSubstitution("font-size", "font-size"),
+				new StyleSubstitution("font-weight", "font-weight"),
+				new StyleSubstitution("font-style", "font-style"),
+				new StaticStyleSubstitution("text-underline-style", "text-decoration", "underline")
+		));
+		addStyleNodeTranslator("table-properties", new TableStyleNodeTranslator(
+				new StyleSubstitution("width", "width")
+		));
+		addStyleNodeTranslator("table-row-properties", new StyleNodeTranslator(
+				new StyleSubstitution("row-height", "height")
+		));
+		addStyleNodeTranslator("table-column-properties", new StyleNodeTranslator(
+				new StyleSubstitution("column-width", "width")
+		));
+		addStyleNodeTranslator("table-cell-properties", new StyleNodeTranslator(
+				new StyleSubstitution("padding", "padding"),
+				new StyleSubstitution("border", "border"),
+				new StyleSubstitution("border-top", "border-top"),
+				new StyleSubstitution("border-right", "border-right"),
+				new StyleSubstitution("border-bottom", "border-bottom"),
+				new StyleSubstitution("border-left", "border-left")
+		));
+		
+		addNodeSubstitution(new NodeSubstitution("p", "p"));
+		addNodeSubstitution(new NodeSubstitution("h", "p"));
+		addNodeSubstitution(new NodeSubstitution("table", "table"));
+		addNodeSubstitution(new NodeSubstitution("table-row", "tr",
+				new AttributeSubstitution("number-rows-repeated", "rowspan")
+		));
+		addNodeSubstitution(new NodeSubstitution("table-cell", "td",
+				new AttributeSubstitution("number-rows-repeated", "rowspan"),
+				new AttributeSubstitution("number-columns-repeated", "colspan")
+		));
+		addNodeSubstitution(new NodeSubstitution("table-column", "colgroup",
+				new AttributeSubstitution("number-columns-repeated", "span")
+		));
+		addNodeSubstitution(new NodeSubstitution("frame", "span"));
+		
+		addAttributeTranslators("style-name", new ClassAttributeTranslator());
 	}
 	
 	
