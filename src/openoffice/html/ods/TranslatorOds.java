@@ -224,6 +224,8 @@ public class TranslatorOds {
 				newContent = newContent.replaceAll("Ö", "&Ouml;");
 				newContent = newContent.replaceAll("Ü", "&Uuml;");
 				newContent = newContent.replaceAll("ß", "&szlig;");
+				newContent = newContent.replaceAll("<", "&lt;");
+				newContent = newContent.replaceAll(">", "&gt;");
 				
 				parent.addChild(new Content(newContent));
 			}
