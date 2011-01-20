@@ -226,6 +226,7 @@ public class TranslatorOds {
 				newContent = newContent.replaceAll("ß", "&szlig;");
 				newContent = newContent.replaceAll("<", "&lt;");
 				newContent = newContent.replaceAll(">", "&gt;");
+				newContent = newContent.replaceAll("%", "&#37;");
 				
 				parent.addChild(new Content(newContent));
 			}
