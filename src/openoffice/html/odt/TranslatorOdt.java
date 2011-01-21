@@ -55,6 +55,7 @@ public class TranslatorOdt {
 		
 		parentStyles = new HashMap<String, String>();
 		
+		
 		addStyleNodeTranslator("text-properties", new StyleNodeTranslator(
 				new StyleSubstitution("font-size", "font-size"),
 				new StyleSubstitution("font-weight", "font-weight"),
