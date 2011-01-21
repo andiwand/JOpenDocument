@@ -14,7 +14,7 @@ public class OpenDocumentSpreadsheet extends OpenDocument {
 	
 	@Override
 	protected boolean checkMimeType(String mimeType) {
-		return MIMETYPE.equals(mimeType);
+		return mimeType.startsWith(MIMETYPE);
 	}
 	
 }
