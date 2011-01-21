@@ -6,6 +6,7 @@ import java.io.InputStream;
 
 public abstract class OpenDocument {
 	
+	public static final String STYLE_PATH = "styles.xml";
 	public static final String CONTENT_PATH = "content.xml";
 	
 	
@@ -26,6 +27,9 @@ public abstract class OpenDocument {
 		return openDocumentFile;
 	}
 	
+	public InputStream getStyles() throws IOException {
+		return openDocumentFile.getFile(STYLE_PATH);
+	}
 	public InputStream getContent() throws IOException {
 		return openDocumentFile.getFile(CONTENT_PATH);
 	}

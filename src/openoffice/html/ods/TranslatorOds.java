@@ -32,17 +32,22 @@ import xml.reader.SaxDocumentReader;
 
 public class TranslatorOds {
 	
-	private Document document;
+	private Document style;
+	private Document content;
 	
 	private Map<String, StyleNodeTranslator> styleNodeTranslators;
 	
 	private Map<String, NodeTranslator> translators;
 	private Map<String, AttributeTranslator> attributeTranslators;
 	
+	private Map<String, String> parentStyles;
+	
 	
 	public TranslatorOds(OpenDocumentSpreadsheet documentSpreadsheet) throws ParserConfigurationException, SAXException, IOException {
-		SaxDocumentReader documentReader = new SaxDocumentReader(documentSpreadsheet.getContent());
-		document = documentReader.readDocument();
+		SaxDocumentReader styleReader = new SaxDocumentReader(documentSpreadsheet.getStyles());
+		style = styleReader.readDocument();
+		SaxDocumentReader contentReader = new SaxDocumentReader(documentSpreadsheet.getContent());
+		content = contentReader.readDocument();
 		
 		styleNodeTranslators = new HashMap<String, StyleNodeTranslator>();
 		
@@ -89,7 +94,7 @@ public class TranslatorOds {
 		));
 		addNodeSubstitution(new NodeSubstitution("frame", "span"));
 		
-		addAttributeTranslators("style-name", new ClassAttributeTranslator());
+		addAttributeTranslators("style-name", new ClassAttributeTranslator(parentStyles));
 	}
 	
 	
@@ -114,22 +119,22 @@ public class TranslatorOds {
 	
 	public HtmlDocument translate() {
 		HtmlDocument result = new HtmlDocument();
-		
-		RootNode documentRoot = document.getRoot();
 		RootNode htmlRoot = result.getHtmlNode();
 		
-		for (Node node : documentRoot.getChildNodes()) {
-			if (node.getName().equals("automatic-styles")) htmlRoot.addChild(handleStyle(node));
-			else if (node.getName().equals("body")) htmlRoot.addChild(handleContent(node));
-		}
+		String cssString = "";
 		
-		return result;
-	}
-	
-	
-	
-	private Node handleStyle(Node style) {
-		Node head = new Node("head");
+		RootNode styleRoot = style.getRoot();
+		Node stylesNode = styleRoot.findChildNode("styles");
+		cssString += handleStyle(stylesNode);
+		
+		RootNode contentRoot = content.getRoot();
+		Node contentStylesNode = contentRoot.findChildNode("automatic-styles");
+		cssString += handleStyle(contentStylesNode);
+		Node contentBodyNode = contentRoot.findChildNode("body");
+		Node htmlBodyNode = handleContent(contentBodyNode);
+		
+		
+		Node htmlHeadNode = new Node("head");
 		
 		/*Node meta = new Node("meta");
 		meta.addAttribute(new Attribute("http-equiv", "Content-Type"));
@@ -137,37 +142,57 @@ public class TranslatorOds {
 		
 		head.addChild(meta);*/
 		
-		Node title = new Node("title");
-		title.addChild(new Content("Odt Translator"));
-		head.addChild(title);
+		Node htmlTitleNode = new Node("title");
+		htmlTitleNode.addChild(new Content("_title_"));
+		htmlHeadNode.addChild(htmlTitleNode);
 		
-		Node css = new Node("style");
-		css.addAttribute(new Attribute("type", "text/css"));
-		css.addAttribute(new Attribute("media", "screen"));
+		Node htmlStyleNode = new Node("style");
+		htmlStyleNode.addAttribute(new Attribute("type", "text/css"));
+		htmlStyleNode.addAttribute(new Attribute("media", "screen"));
+		htmlStyleNode.addChild(new Content(cssString));
+		htmlHeadNode.addChild(htmlStyleNode);
+		
+		htmlRoot.addChild(htmlHeadNode);
+		htmlRoot.addChild(htmlBodyNode);
+		
+		return result;
+	}
+	
+	
+	
+	private String handleStyle(Node style) {
+		StringBuilder cssStringBuilder = new StringBuilder();
 		
 		for (Node styleNode : style.getChildNodes()) {
+			if (!styleNode.getName().equals("style")) continue;
+			
+			Attribute parentAttribute = styleNode.findAttribute("parent-style-name");
+			if (parentAttribute != null) {
+				String name = styleNode.findAttribute("name").getValue().replaceAll("\\.", "_");
+				String parentName = parentAttribute.getValue().replaceAll("\\.", "_");
+				
+				parentStyles.put(name, parentName);
+			}
+			
 			String name = styleNode.findAttribute("name").getValue();
 			name = name.replaceAll("\\.", "_");
 			name = "." + name;
 			
-			String cssString = name + "{";
+			cssStringBuilder.append(name);
+			cssStringBuilder.append("{");
 			
 			for (Node childStyle : styleNode.getChildNodes()) {
 				if (styleNodeTranslators.containsKey(childStyle.getName())) {
 					StyleNodeTranslator translator = styleNodeTranslators.get(childStyle.getName());
 					
-					cssString += translator.translate(childStyle);
+					cssStringBuilder.append(translator.translate(childStyle));
 				}
 			}
 			
-			cssString += "}";
-			
-			css.addChild(new Content(cssString));
+			cssStringBuilder.append("}");
 		}
 		
-		head.addChild(css);
-		
-		return head;
+		return cssStringBuilder.toString();
 	}
 	
 	private Node handleContent(Node content) {
