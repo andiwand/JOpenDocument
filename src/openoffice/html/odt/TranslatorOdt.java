@@ -10,6 +10,7 @@ import openoffice.OpenDocumentText;
 import openoffice.html.AttributeSubstitution;
 import openoffice.html.AttributeTranslator;
 import openoffice.html.ClassAttributeTranslator;
+import openoffice.html.HtmlDocument;
 import openoffice.html.NodeSubstitution;
 import openoffice.html.NodeTranslator;
 import openoffice.html.StaticStyleSubstitution;
@@ -98,8 +99,8 @@ public class TranslatorOdt {
 	}
 	
 	
-	public HtmlPageOdt translate(int page) {
-		HtmlPageOdt result = new HtmlPageOdt(page);
+	public HtmlDocument translate() {
+		HtmlDocument result = new HtmlDocument();
 		
 		RootNode documentRoot = document.getRoot();
 		RootNode htmlRoot = result.getHtmlNode();

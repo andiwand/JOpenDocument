@@ -7,9 +7,9 @@ import javax.swing.JFileChooser;
 
 import openoffice.CachedOpenDocumentFile;
 import openoffice.OpenDocumentText;
+import openoffice.html.HtmlDocument;
 import openoffice.html.ImageCache;
 import openoffice.html.ImageTranslator;
-import openoffice.html.odt.HtmlPageOdt;
 import openoffice.html.odt.TranslatorOdt;
 
 
@@ -36,7 +36,7 @@ public class TestTranslatorOdt {
 		//imageTranslator.setUriTranslator(new AndroidImageUriTranslator());
 		translatorOdt.addNodeTranslator("image", imageTranslator);
 		
-		HtmlPageOdt pageOdt = translatorOdt.translate(0);
+		HtmlDocument pageOdt = translatorOdt.translate();
 		
 		String htmlFileName = file.getName();
 		int lastDot = htmlFileName.lastIndexOf(".");

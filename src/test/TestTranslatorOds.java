@@ -7,7 +7,7 @@ import javax.swing.JFileChooser;
 
 import openoffice.CachedOpenDocumentFile;
 import openoffice.OpenDocumentSpreadsheet;
-import openoffice.html.ods.HtmlPageOds;
+import openoffice.html.HtmlDocument;
 import openoffice.html.ods.TranslatorOds;
 
 
@@ -27,7 +27,7 @@ public class TestTranslatorOds {
 		OpenDocumentSpreadsheet spreadsheet = new OpenDocumentSpreadsheet(documentFile);
 		TranslatorOds translatorOds = new TranslatorOds(spreadsheet);
 		
-		HtmlPageOds pageOds = translatorOds.translate();
+		HtmlDocument pageOds = translatorOds.translate();
 		
 		String htmlFileName = file.getName();
 		int lastDot = htmlFileName.lastIndexOf(".");

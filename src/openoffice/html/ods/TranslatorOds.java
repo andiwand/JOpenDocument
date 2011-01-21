@@ -9,6 +9,7 @@ import javax.xml.parsers.ParserConfigurationException;
 import openoffice.html.AttributeSubstitution;
 import openoffice.html.AttributeTranslator;
 import openoffice.html.ClassAttributeTranslator;
+import openoffice.html.HtmlDocument;
 import openoffice.html.NodeSubstitution;
 import openoffice.html.NodeTranslator;
 import openoffice.html.StaticStyleSubstitution;
@@ -111,8 +112,8 @@ public class TranslatorOds {
 	}
 	
 	
-	public HtmlPageOds translate() {
-		HtmlPageOds result = new HtmlPageOds();
+	public HtmlDocument translate() {
+		HtmlDocument result = new HtmlDocument();
 		
 		RootNode documentRoot = document.getRoot();
 		RootNode htmlRoot = result.getHtmlNode();
