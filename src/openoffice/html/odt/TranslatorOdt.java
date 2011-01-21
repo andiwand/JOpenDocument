@@ -133,6 +133,8 @@ public class TranslatorOdt {
 		Node contentBodyNode = contentRoot.findChildNode("body");
 		Node htmlBodyNode = handleContent(contentBodyNode);
 		
+		cssString = cssString.replaceAll("%", "&#37;");
+		
 		
 		Node htmlHeadNode = new Node("head");
 		
