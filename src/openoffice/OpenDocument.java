@@ -6,6 +6,8 @@ import java.io.InputStream;
 
 public abstract class OpenDocument {
 	
+	public static final String MANIFEST_PATH = "META-INF/maifest.xml";
+	public static final String META_PATH = "meta.xml";
 	public static final String STYLE_PATH = "styles.xml";
 	public static final String CONTENT_PATH = "content.xml";
 	
@@ -27,6 +29,12 @@ public abstract class OpenDocument {
 		return openDocumentFile;
 	}
 	
+	public InputStream getManifest() throws IOException {
+		return openDocumentFile.getFile(MANIFEST_PATH);
+	}
+	public InputStream getMeta() throws IOException {
+		return openDocumentFile.getFile(META_PATH);
+	}
 	public InputStream getStyles() throws IOException {
 		return openDocumentFile.getFile(STYLE_PATH);
 	}

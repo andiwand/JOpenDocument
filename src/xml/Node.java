@@ -45,11 +45,11 @@ public class Node extends Element {
 	public Node(Node node) {
 		this(node.namespace, node.name);
 		
-		for (Element child : children) {
+		for (Element child : node.children) {
 			addChild(child.clone());
 		}
 		
-		for (Attribute attribute : attributes) {
+		for (Attribute attribute : node.attributes) {
 			addAttribute(new Attribute(attribute));
 		}
 	}
@@ -154,7 +154,10 @@ public class Node extends Element {
 		return name;
 	}
 	public String getQName() {
-		return namespace + ":" + name;
+		if ((namespace != null) && (namespace.length() != 0))
+			return namespace + ":" + name;
+		else
+			return name;
 	}
 	public List<Attribute> getAttributes() {
 		return Collections.unmodifiableList(attributes);

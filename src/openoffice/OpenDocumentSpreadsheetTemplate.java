@@ -1,6 +1,5 @@
 package openoffice;
 
-import java.io.IOException;
 
 
 public class OpenDocumentSpreadsheetTemplate extends OpenDocumentSpreadsheet {
@@ -8,7 +7,7 @@ public class OpenDocumentSpreadsheetTemplate extends OpenDocumentSpreadsheet {
 	public static final String MIMETYPE = "application/vnd.oasis.opendocument.spreadsheet-template";
 	
 	
-	public OpenDocumentSpreadsheetTemplate(OpenDocumentFile openDocumentFile) throws IOException {
+	public OpenDocumentSpreadsheetTemplate(OpenDocumentFile openDocumentFile) throws Exception {
 		super(openDocumentFile);
 	}
 	

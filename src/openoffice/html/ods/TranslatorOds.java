@@ -32,6 +32,8 @@ import xml.reader.SaxDocumentReader;
 
 public class TranslatorOds {
 	
+	private OpenDocumentSpreadsheet documentSpreadsheet;
+	
 	private Document style;
 	private Document content;
 	
@@ -44,6 +46,8 @@ public class TranslatorOds {
 	
 	
 	public TranslatorOds(OpenDocumentSpreadsheet documentSpreadsheet) throws ParserConfigurationException, SAXException, IOException {
+		this.documentSpreadsheet = documentSpreadsheet;
+		
 		SaxDocumentReader styleReader = new SaxDocumentReader(documentSpreadsheet.getStyles());
 		style = styleReader.readDocument();
 		SaxDocumentReader contentReader = new SaxDocumentReader(documentSpreadsheet.getContent());
@@ -120,6 +124,16 @@ public class TranslatorOds {
 	
 	
 	public HtmlDocument translate() {
+		return translate(0, documentSpreadsheet.getTableCount());
+	}
+	public HtmlDocument translate(int table) {
+		return translate(table, 1);
+	}
+	public HtmlDocument translate(int startTable, int countTable) {
+		if (countTable <= 0) throw new IndexOutOfBoundsException("countTable must be greater than 0!");
+		if ((startTable + countTable) > documentSpreadsheet.getTableCount())
+			throw new IndexOutOfBoundsException("startTable out of range!");
+		
 		HtmlDocument result = new HtmlDocument();
 		RootNode htmlRoot = result.getHtmlNode();
 		
@@ -132,8 +146,11 @@ public class TranslatorOds {
 		RootNode contentRoot = content.getRoot();
 		Node contentStylesNode = contentRoot.findChildNode("automatic-styles");
 		cssString += handleStyle(contentStylesNode);
-		Node contentBodyNode = contentRoot.findChildNode("body");
-		Node htmlBodyNode = handleContent(contentBodyNode);
+		Node content = contentRoot.findChildNode("body").findChildNode("spreadsheet");
+		Node newContent = new Node(content.getQName());
+		for (Node contentTable : content.getChildNodes().subList(startTable, startTable + countTable))
+			newContent.addChild(new Node(contentTable));
+		Node htmlBodyNode = handleContent(newContent);
 		
 		cssString = cssString.replaceAll("%", "&#37;");
 		
