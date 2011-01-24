@@ -131,7 +131,7 @@ public class TranslatorOdt {
 		RootNode contentRoot = content.getRoot();
 		Node contentStylesNode = contentRoot.findChildNode("automatic-styles");
 		cssString += handleStyle(contentStylesNode);
-		Node content = contentRoot.findChildNode("body").findChildNode("spreadsheet");
+		Node content = contentRoot.findChildNode("body").findChildNode("text");
 		Node htmlBodyNode = handleContent(content);
 		
 		cssString = cssString.replaceAll("%", "&#37;");
