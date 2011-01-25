@@ -39,11 +39,13 @@ public class ImageTranslator implements NodeTranslator {
 	
 	public Node translateNode(Node source) {
 		try {
-			File imageFile = new File(source.findAttribute("href").getValue());
+			String imagePath = source.findAttribute("href").getValue();
+			if (imagePath.startsWith("./")) imagePath = imagePath.substring(2);
+			String imageName = new File(imagePath).getName();
 			
-			InputStream inputStream = documentText.getOpenDocumentFile().getFile(imageFile.getPath());
+			InputStream inputStream = documentText.getOpenDocumentFile().getFile(imagePath);
 			
-			File tmpFile = imageCache.newImage(imageFile.getName());
+			File tmpFile = imageCache.newImage(imageName);
 			FileOutputStream outputStream = new FileOutputStream(tmpFile);
 			
 			pipeImage(inputStream, outputStream);
