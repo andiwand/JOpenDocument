@@ -83,14 +83,11 @@ public class TranslatorOdt {
 		
 		addNodeSubstitution(new NodeSubstitution("p", "p"));
 		addNodeSubstitution(new NodeSubstitution("h", "p"));
-		//addNodeSubstitution(new NodeSubstitution("table", "table"));
 		addNodeSubstitution(new TableAgent());
 		addNodeSubstitution(new NodeSubstitution("table-row", "tr",
 				new AttributeSubstitution("number-rows-repeated", "rowspan")
 		));
 		addNodeSubstitution(new NodeSubstitution("table-cell", "td",
-				new AttributeSubstitution("number-rows-repeated", "rowspan"),
-				new AttributeSubstitution("number-columns-repeated", "colspan"),
 				new AttributeSubstitution("number-rows-spanned", "rowspan"),
 				new AttributeSubstitution("number-columns-spanned", "colspan")
 		));

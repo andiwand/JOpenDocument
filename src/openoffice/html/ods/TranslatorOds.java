@@ -93,8 +93,6 @@ public class TranslatorOds {
 				new AttributeSubstitution("number-rows-repeated", "rowspan")
 		));
 		addNodeSubstitution(new NodeSubstitution("table-cell", "td",
-				new AttributeSubstitution("number-rows-repeated", "rowspan"),
-				new AttributeSubstitution("number-columns-repeated", "colspan"),
 				new AttributeSubstitution("number-rows-spanned", "rowspan"),
 				new AttributeSubstitution("number-columns-spanned", "colspan")
 		));

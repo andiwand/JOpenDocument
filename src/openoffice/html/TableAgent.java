@@ -20,7 +20,9 @@ public class TableAgent extends NodeSubstitution {
 		
 		List<String> defaultStyles = new ArrayList<String>();
 		
-		for (Node childNode : source.getChildNodes()) {
+		List<Node> table = source.getChildNodes();
+		source.clearChildren();
+		for (Node childNode : table) {
 			if (childNode.getName().equals("table-column")) {
 				Attribute defaultStyleAttribute = childNode.findAttribute("default-cell-style-name");
 				if (defaultStyleAttribute == null) continue;
@@ -33,13 +35,35 @@ public class TableAgent extends NodeSubstitution {
 				for (int i = 0; i < columnsRepeated; i++)
 					defaultStyles.add(defaultStyleAttribute.getValue());
 			} else if (childNode.getName().equals("table-row")) {
+				List<Node> row = childNode.getChildNodes();
+				childNode.clearChildren();
+				
 				int cellIndex = 0;
-				for (Node cell : childNode.getChildNodes()) {
+				for (Node cell : row) {
 					if (!cell.hasAttribute("style-name") && (cellIndex < defaultStyles.size()))
 						cell.addAttribute(new Attribute("table:style-name", defaultStyles.get(cellIndex)));
-					cellIndex++;
+					
+					int columnsRepeated = 1;
+					Attribute columnsRepeatedAttribute = cell.findAttribute("number-columns-repeated");
+					if (columnsRepeatedAttribute != null)
+						columnsRepeated = Integer.valueOf(columnsRepeatedAttribute.getValue());
+					
+					for (int i = 0; i < columnsRepeated; i++) {
+						childNode.addChild(new Node(cell));
+						cellIndex++;
+					}
+				}
+				
+				Attribute rowsRepeatedAttribute = childNode.findAttribute("number-rows-repeated");
+				if (rowsRepeatedAttribute != null) {
+					int columnsRepeated = Integer.valueOf(rowsRepeatedAttribute.getValue());
+					
+					for (int i = 1; i < columnsRepeated; i++)
+						source.addChild(new Node(childNode));
 				}
 			}
+			
+			source.addChild(childNode);
 		}
 		
 		return result;

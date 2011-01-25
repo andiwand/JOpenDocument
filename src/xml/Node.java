@@ -236,7 +236,18 @@ public class Node extends Element {
 	}
 	
 	
+	public void clearChildren() {
+		for (Element element : children) {
+			element.parent = null;
+		}
+		
+		children.clear();
+	}
 	public void clearAttributes() {
+		for (Attribute attribute : attributes) {
+			attribute.node = null;
+		}
+		
 		attributes.clear();
 	}
 	
