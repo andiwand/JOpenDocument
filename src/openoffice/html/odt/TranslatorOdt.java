@@ -15,6 +15,7 @@ import openoffice.html.NodeSubstitution;
 import openoffice.html.NodeTranslator;
 import openoffice.html.StaticStyleSubstitution;
 import openoffice.html.StyleNodeTranslator;
+import openoffice.html.StyleSizeSubstitution;
 import openoffice.html.StyleSubstitution;
 import openoffice.html.TableAgent;
 import openoffice.html.TableStyleNodeTranslator;
@@ -74,15 +75,18 @@ public class TranslatorOdt {
 		));
 		addStyleNodeTranslator("table-cell-properties", new StyleNodeTranslator(
 				new StyleSubstitution("padding", "padding"),
-				new StyleSubstitution("border", "border"),
-				new StyleSubstitution("border-top", "border-top"),
-				new StyleSubstitution("border-right", "border-right"),
-				new StyleSubstitution("border-bottom", "border-bottom"),
-				new StyleSubstitution("border-left", "border-left")
+				new StyleSizeSubstitution("border", "border"),
+				new StyleSizeSubstitution("border-top", "border-top"),
+				new StyleSizeSubstitution("border-right", "border-right"),
+				new StyleSizeSubstitution("border-bottom", "border-bottom"),
+				new StyleSizeSubstitution("border-left", "border-left")
 		));
 		
 		addNodeSubstitution(new NodeSubstitution("p", "p"));
 		addNodeSubstitution(new NodeSubstitution("h", "p"));
+		addNodeSubstitution(new NodeSubstitution("a", "a",
+				new AttributeSubstitution("href", "href")
+		));
 		addNodeSubstitution(new TableAgent());
 		addNodeSubstitution(new NodeSubstitution("table-row", "tr",
 				new AttributeSubstitution("number-rows-repeated", "rowspan")

@@ -36,11 +36,7 @@ public class TestTranslatorOdt {
 		//imageTranslator.setUriTranslator(new AndroidImageUriTranslator());
 		translatorOdt.addNodeTranslator("image", imageTranslator);
 		
-		long startTime = System.nanoTime();
 		HtmlDocument pageOdt = translatorOdt.translate();
-		long endTime = System.nanoTime();
-		
-		System.out.println("Translation took " + ((endTime - startTime) / 1000000000d) + " s");
 		
 		String htmlFileName = file.getName();
 		int lastDot = htmlFileName.lastIndexOf(".");

@@ -13,7 +13,7 @@ public class TableStyleNodeTranslator extends StyleNodeTranslator {
 	public String translate(Node source) {
 		String result = super.translate(source);
 		
-		result += "border-collapse: collapse";
+		result += "border-collapse: collapse;";
 		
 		return result;
 	}

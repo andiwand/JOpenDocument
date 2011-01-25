@@ -27,11 +27,7 @@ public class TestTranslatorOds {
 		OpenDocumentSpreadsheet spreadsheet = new OpenDocumentSpreadsheet(documentFile);
 		TranslatorOds translatorOds = new TranslatorOds(spreadsheet);
 		
-		long startTime = System.nanoTime();
 		HtmlDocument pageOds = translatorOds.translate();
-		long endTime = System.nanoTime();
-		
-		System.out.println("Translation took " + ((endTime - startTime) / 1000000000d) + " s");
 		
 		String htmlFileName = file.getName();
 		int lastDot = htmlFileName.lastIndexOf(".");

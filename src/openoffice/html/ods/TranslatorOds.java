@@ -88,6 +88,9 @@ public class TranslatorOds {
 		
 		addNodeSubstitution(new NodeSubstitution("p", "p"));
 		addNodeSubstitution(new NodeSubstitution("h", "p"));
+		addNodeSubstitution(new NodeSubstitution("a", "a",
+				new AttributeSubstitution("href", "href")
+		));
 		addNodeSubstitution(new TableAgent());
 		addNodeSubstitution(new NodeSubstitution("table-row", "tr",
 				new AttributeSubstitution("number-rows-repeated", "rowspan")
