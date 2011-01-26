@@ -161,7 +161,6 @@ public class TranslatorOds {
 			
 			if (contentTable.getName().equals("table")) {
 				if (table++ < startTable) continue;
-				System.out.println(contentTable);
 				newContent.addChild(new Node(contentTable));
 			}
 		}
