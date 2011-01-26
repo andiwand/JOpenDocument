@@ -17,6 +17,7 @@ public class UnderlineStyleSubstitution extends StyleSubstitution {
 		String style = "text-decoration: ";
 		
 		if (source.getValue().equals("solid")) style += "underline";
+		else style += "none";
 		
 		style += ";";
 		
