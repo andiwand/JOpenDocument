@@ -13,12 +13,12 @@ import openoffice.html.ClassAttributeTranslator;
 import openoffice.html.HtmlDocument;
 import openoffice.html.NodeSubstitution;
 import openoffice.html.NodeTranslator;
-import openoffice.html.StaticStyleSubstitution;
 import openoffice.html.StyleNodeTranslator;
 import openoffice.html.StyleSizeSubstitution;
 import openoffice.html.StyleSubstitution;
 import openoffice.html.TableAgent;
 import openoffice.html.TableStyleNodeTranslator;
+import openoffice.html.UnderlineStyleSubstitution;
 
 import org.xml.sax.SAXException;
 
@@ -58,11 +58,14 @@ public class TranslatorOdt {
 		parentStyles = new HashMap<String, String>();
 		
 		
+		addStyleNodeTranslator("paragraph-properties", new StyleNodeTranslator(
+				new StyleSubstitution("text-align", "text-align")
+		));
 		addStyleNodeTranslator("text-properties", new StyleNodeTranslator(
 				new StyleSubstitution("font-size", "font-size"),
 				new StyleSubstitution("font-weight", "font-weight"),
 				new StyleSubstitution("font-style", "font-style"),
-				new StaticStyleSubstitution("text-underline-style", "text-decoration", "underline")
+				new UnderlineStyleSubstitution()
 		));
 		addStyleNodeTranslator("table-properties", new TableStyleNodeTranslator(
 				new StyleSubstitution("width", "width")

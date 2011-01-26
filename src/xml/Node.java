@@ -163,6 +163,10 @@ public class Node extends Element {
 		return Collections.unmodifiableList(attributes);
 	}
 	
+	public boolean isEmpty() {
+		return children.isEmpty();
+	}
+	
 	
 	public void setNamespace(String namespace) {
 		this.namespace = namespace;
