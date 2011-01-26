@@ -155,8 +155,16 @@ public class TranslatorOds {
 		cssString += handleStyle(contentStylesNode);
 		Node content = contentRoot.findChildNode("body").findChildNode("spreadsheet");
 		Node newContent = new Node(content.getQName());
-		for (Node contentTable : content.getChildNodes().subList(startTable, startTable + countTable))
-			newContent.addChild(new Node(contentTable));
+		int table = 0;
+		for (Node contentTable : content.getChildNodes()) {
+			if (table >= (startTable + countTable)) break;
+			
+			if (contentTable.getName().equals("table")) {
+				if (table++ < startTable) continue;
+				System.out.println(contentTable);
+				newContent.addChild(new Node(contentTable));
+			}
+		}
 		Node htmlBodyNode = handleContent(newContent);
 		
 		cssString = cssString.replaceAll("%", "&#37;");
