@@ -9,7 +9,7 @@ import xml.Attribute;
 public class StyleSizeSubstitution extends StyleSubstitution {
 	
 	public static final double DEFAULT_SMALER_THAN = 0.01;
-	public static final Pattern SIZE_PATTERN = Pattern.compile("(\\d+(\\.\\d+)?)cm");
+	public static final Pattern SIZE_PATTERN = Pattern.compile("(\\d+(\\.\\d+)?)(cm|in)");
 	
 	
 	private double smalerThan;
