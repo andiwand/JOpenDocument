@@ -13,11 +13,14 @@ import openoffice.html.ClassAttributeTranslator;
 import openoffice.html.HtmlDocument;
 import openoffice.html.NodeSubstitution;
 import openoffice.html.NodeTranslator;
+import openoffice.html.SpaceNodeSubstitution;
 import openoffice.html.StyleNodeTranslator;
 import openoffice.html.StyleSizeSubstitution;
 import openoffice.html.StyleSubstitution;
+import openoffice.html.TabNodeSubstitution;
 import openoffice.html.TableAgent;
 import openoffice.html.TableStyleNodeTranslator;
+import openoffice.html.TextNodeSubstitution;
 import openoffice.html.UnderlineStyleSubstitution;
 
 import org.xml.sax.SAXException;
@@ -89,8 +92,11 @@ public class TranslatorOds {
 				new StyleSizeSubstitution("border-left", "border-left")
 		));
 		
-		addNodeSubstitution(new NodeSubstitution("p", "p"));
-		addNodeSubstitution(new NodeSubstitution("h", "p"));
+		addNodeSubstitution(new TextNodeSubstitution("p", "p"));
+		addNodeSubstitution(new TextNodeSubstitution("h", "p"));
+		addNodeSubstitution(new TextNodeSubstitution("span", "span"));
+		addNodeSubstitution(new TabNodeSubstitution());
+		addNodeSubstitution(new SpaceNodeSubstitution());
 		addNodeSubstitution(new NodeSubstitution("a", "a",
 				new AttributeSubstitution("href", "href")
 		));
@@ -105,7 +111,7 @@ public class TranslatorOds {
 		addNodeSubstitution(new NodeSubstitution("table-column", "colgroup",
 				new AttributeSubstitution("number-columns-repeated", "span")
 		));
-		addNodeSubstitution(new NodeSubstitution("frame", "span"));
+		addNodeSubstitution(new TextNodeSubstitution("frame", "span"));
 		
 		addAttributeTranslators("style-name", new ClassAttributeTranslator(parentStyles));
 	}
