@@ -7,22 +7,22 @@ import java.io.InputStream;
 import java.io.OutputStream;
 import java.net.URI;
 
-import openoffice.OpenDocumentText;
+import openoffice.OpenDocument;
 import xml.Attribute;
 import xml.Node;
 
 
 public class ImageTranslator implements NodeTranslator {
 	
-	private OpenDocumentText documentText;
+	private OpenDocument document;
 	
 	private ImageCache imageCache;
 	
 	private URITranslator uriTranslator;
 	
 	
-	public ImageTranslator(OpenDocumentText documentText, ImageCache imageCache) {
-		this.documentText = documentText;
+	public ImageTranslator(OpenDocument document, ImageCache imageCache) {
+		this.document = document;
 		
 		this.imageCache = imageCache;
 	}
@@ -43,7 +43,7 @@ public class ImageTranslator implements NodeTranslator {
 			if (imagePath.startsWith("./")) imagePath = imagePath.substring(2);
 			String imageName = new File(imagePath).getName();
 			
-			InputStream inputStream = documentText.getOpenDocumentFile().getFile(imagePath);
+			InputStream inputStream = document.getOpenDocumentFile().getFile(imagePath);
 			
 			File tmpFile = imageCache.newImage(imageName);
 			FileOutputStream outputStream = new FileOutputStream(tmpFile);
