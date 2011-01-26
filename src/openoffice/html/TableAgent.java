@@ -34,16 +34,14 @@ public class TableAgent extends NodeSubstitution {
 				int columns = 0;
 				
 				for (Node cell : row) {
-					if (cell.isEmpty()) {
-						columns = totalColumns;
-					} else {
-						int columnsRepeated = 1;
-						Attribute columnsRepeatedAttribute = cell.findAttribute("number-columns-repeated");
-						if (columnsRepeatedAttribute != null)
-							columnsRepeated = Integer.valueOf(columnsRepeatedAttribute.getValue());
-						
-						totalColumns += columnsRepeated;
-					}
+					int columnsRepeated = 1;
+					Attribute columnsRepeatedAttribute = cell.findAttribute("number-columns-repeated");
+					if (columnsRepeatedAttribute != null)
+						columnsRepeated = Integer.valueOf(columnsRepeatedAttribute.getValue());
+					
+					totalColumns += columnsRepeated;
+					
+					if (!cell.isEmpty()) columns = totalColumns;
 				}
 				
 				if (columns > maxColumns) maxColumns = columns;
