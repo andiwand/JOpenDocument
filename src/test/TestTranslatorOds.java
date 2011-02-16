@@ -25,9 +25,14 @@ public class TestTranslatorOds {
 		FileInputStream inputStream = new FileInputStream(file);
 		CachedOpenDocumentFile documentFile = new CachedOpenDocumentFile(inputStream);
 		OpenDocumentSpreadsheet spreadsheet = new OpenDocumentSpreadsheet(documentFile);
+		System.out.println(spreadsheet.getTableNames());
 		TranslatorOds translatorOds = new TranslatorOds(spreadsheet);
 		
+		long startTime = System.nanoTime();
 		HtmlDocument pageOds = translatorOds.translate();
+		long endTime = System.nanoTime();
+		
+		System.out.println(((endTime - startTime) / 1000000000d) + "s");
 		
 		String htmlFileName = file.getName();
 		int lastDot = htmlFileName.lastIndexOf(".");

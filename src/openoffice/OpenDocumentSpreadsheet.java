@@ -1,5 +1,8 @@
 package openoffice;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import xml.Attribute;
 import xml.Document;
 import xml.Node;
@@ -31,6 +34,24 @@ public class OpenDocumentSpreadsheet extends OpenDocument {
 	
 	public int getTableCount() {
 		return tableCount;
+	}
+	
+	public List<String> getTableNames() throws Exception {
+		ArrayList<String> result = new ArrayList<String>();
+		
+		SaxDocumentReader reader = new SaxDocumentReader(getContent());
+		Document document = reader.readDocument();
+		Node spreadsheet = document.getRoot().findChildNode("body").findChildNode("spreadsheet");
+		
+		for (Node node : spreadsheet.getChildNodes()) {
+			if (!node.getName().equals("table")) continue;
+			
+			Attribute name = node.findAttribute("name");
+			if (name == null) result.add("");
+			else result.add(name.getValue());
+		}
+		
+		return result;
 	}
 	
 }

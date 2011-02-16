@@ -43,7 +43,7 @@ public class ImageTranslator implements NodeTranslator {
 			if (imagePath.startsWith("./")) imagePath = imagePath.substring(2);
 			String imageName = new File(imagePath).getName();
 			
-			InputStream inputStream = document.getOpenDocumentFile().getFile(imagePath);
+			InputStream inputStream = document.getOpenDocumentFile().getFileStream(imagePath);
 			
 			File tmpFile = imageCache.newImage(imageName);
 			FileOutputStream outputStream = new FileOutputStream(tmpFile);
