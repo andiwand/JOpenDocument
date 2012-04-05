@@ -20,9 +20,9 @@ public class TestTranslatorOds {
 		if (option == JFileChooser.CANCEL_OPTION) return;
 		
 		File file = fileChooser.getSelectedFile();
-		
-		
 		FileInputStream inputStream = new FileInputStream(file);
+		
+		
 		CachedOpenDocumentFile documentFile = new CachedOpenDocumentFile(inputStream);
 		OpenDocumentSpreadsheet spreadsheet = new OpenDocumentSpreadsheet(documentFile);
 		System.out.println(spreadsheet.getTableNames());
