@@ -48,11 +48,11 @@ public class TranslatorOdt {
 	
 	public TranslatorOdt(OpenDocumentText documentText)
 			throws ParserConfigurationException, SAXException, IOException {
-		SaxDocumentReader styleReader = new SaxDocumentReader(
-				documentText.getStyles());
+		SaxDocumentReader styleReader = new SaxDocumentReader(documentText
+				.getStyles());
 		style = styleReader.readDocument();
-		SaxDocumentReader contentReader = new SaxDocumentReader(
-				documentText.getContent());
+		SaxDocumentReader contentReader = new SaxDocumentReader(documentText
+				.getContent());
 		content = contentReader.readDocument();
 		
 		styleNodeTranslators = new HashMap<String, StyleNodeTranslator>();
@@ -181,10 +181,11 @@ public class TranslatorOdt {
 		for (Node styleNode : style.getChildNodes()) {
 			if (!styleNode.getName().equals("style")) continue;
 			
-			Attribute parentAttribute = styleNode.findAttribute("parent-style-name");
+			Attribute parentAttribute = styleNode
+					.findAttribute("parent-style-name");
 			if (parentAttribute != null) {
-				String name = styleNode.findAttribute("name").getValue().replaceAll(
-						"\\.", "_");
+				String name = styleNode.findAttribute("name").getValue()
+						.replaceAll("\\.", "_");
 				String parentName = parentAttribute.getValue().replaceAll(
 						"\\.", "_");
 				
@@ -200,7 +201,8 @@ public class TranslatorOdt {
 			
 			for (Node childStyle : styleNode.getChildNodes()) {
 				if (styleNodeTranslators.containsKey(childStyle.getName())) {
-					StyleNodeTranslator translator = styleNodeTranslators.get(childStyle.getName());
+					StyleNodeTranslator translator = styleNodeTranslators
+							.get(childStyle.getName());
 					
 					cssStringBuilder.append(translator.translate(childStyle));
 				}
@@ -227,7 +229,8 @@ public class TranslatorOdt {
 				Node childNode = (Node) childElement;
 				
 				if (translators.containsKey(childNode.getName())) {
-					NodeTranslator translator = translators.get(childNode.getName());
+					NodeTranslator translator = translators.get(childNode
+							.getName());
 					
 					Node node = translator.translateNode(childNode);
 					Node newNode = new Node(node);
@@ -236,9 +239,12 @@ public class TranslatorOdt {
 					for (Attribute attribute : childNode.getAttributes()) {
 						Attribute newAttribute = attribute;
 						
-						if (attributeTranslators.containsKey(attribute.getName())) {
-							AttributeTranslator attributeTranslator = attributeTranslators.get(attribute.getName());
-							newAttribute = attributeTranslator.translate(attribute);
+						if (attributeTranslators.containsKey(attribute
+								.getName())) {
+							AttributeTranslator attributeTranslator = attributeTranslators
+									.get(attribute.getName());
+							newAttribute = attributeTranslator
+									.translate(attribute);
 						}
 						
 						if (node.hasAttribute(newAttribute.getName())) break;

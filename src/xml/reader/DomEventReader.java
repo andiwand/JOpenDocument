@@ -42,7 +42,8 @@ public class DomEventReader extends XmlEventReader {
 				Content content = (Content) element;
 				
 				for (DomEventListener listener : listeners) {
-					if (listener.matchNode(node)) listener.contentOccurred(content);
+					if (listener.matchNode(node))
+						listener.contentOccurred(content);
 				}
 			}
 		}

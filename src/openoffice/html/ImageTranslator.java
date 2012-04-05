@@ -40,8 +40,8 @@ public class ImageTranslator implements NodeTranslator {
 			if (imagePath.startsWith("./")) imagePath = imagePath.substring(2);
 			String imageName = new File(imagePath).getName();
 			
-			InputStream inputStream = document.getOpenDocumentFile().getFileStream(
-					imagePath);
+			InputStream inputStream = document.getOpenDocumentFile()
+					.getFileStream(imagePath);
 			
 			File tmpFile = imageCache.newImage(imageName);
 			FileOutputStream outputStream = new FileOutputStream(tmpFile);
@@ -49,7 +49,8 @@ public class ImageTranslator implements NodeTranslator {
 			pipeImage(inputStream, outputStream);
 			
 			URI tmpFileUri = tmpFile.getAbsoluteFile().toURI();
-			if (uriTranslator != null) tmpFileUri = uriTranslator.translate(tmpFileUri);
+			if (uriTranslator != null)
+				tmpFileUri = uriTranslator.translate(tmpFileUri);
 			
 			Node img = new Node("img");
 			img.addAttribute(new Attribute("src", tmpFileUri.toString()));

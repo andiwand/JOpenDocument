@@ -15,8 +15,9 @@ public class Node extends Element {
 	List<Attribute> attributes;
 	
 	public Node(String qName) {
-		if (qName == null) throw new NullPointerException(
-				"The argument 'qName' must not be null!");
+		if (qName == null)
+			throw new NullPointerException(
+					"The argument 'qName' must not be null!");
 		
 		this.children = new ArrayList<Element>();
 		
@@ -33,8 +34,9 @@ public class Node extends Element {
 	}
 	
 	public Node(String namespace, String name) {
-		if (name == null) throw new NullPointerException(
-				"The argument 'name' must not be null!");
+		if (name == null)
+			throw new NullPointerException(
+					"The argument 'name' must not be null!");
 		
 		this.children = new ArrayList<Element>();
 		
@@ -140,7 +142,8 @@ public class Node extends Element {
 		StringBuilder builder = new StringBuilder();
 		
 		for (Element child : children) {
-			if (child instanceof Content) builder.append(((Content) child).getContent());
+			if (child instanceof Content)
+				builder.append(((Content) child).getContent());
 		}
 		
 		return builder.toString();
@@ -177,15 +180,17 @@ public class Node extends Element {
 	}
 	
 	public void setName(String name) {
-		if (name == null) throw new NullPointerException(
-				"The argument 'name' must not be null!");
+		if (name == null)
+			throw new NullPointerException(
+					"The argument 'name' must not be null!");
 		
 		this.name = name;
 	}
 	
 	public void getQName(String qName) {
-		if (qName == null) throw new NullPointerException(
-				"The argument 'qName' must not be null!");
+		if (qName == null)
+			throw new NullPointerException(
+					"The argument 'qName' must not be null!");
 		
 		String[] parts = qName.split(":");
 		

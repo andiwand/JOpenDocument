@@ -9,7 +9,8 @@ import xml.Attribute;
 public class StyleSizeSubstitution extends StyleSubstitution {
 	
 	public static final double DEFAULT_SMALER_THAN = 0.01;
-	public static final Pattern SIZE_PATTERN = Pattern.compile("(\\d+(\\.\\d+)?)(cm|in)");
+	public static final Pattern SIZE_PATTERN = Pattern
+			.compile("(\\d+(\\.\\d+)?)(cm|in)");
 	
 	private double smalerThan;
 	
@@ -32,8 +33,9 @@ public class StyleSizeSubstitution extends StyleSubstitution {
 		if (matcher.find()) {
 			double size = Double.valueOf(matcher.group(1));
 			
-			if (size < smalerThan) result = result.substring(0, matcher.start())
-					+ "1px" + result.substring(matcher.end());
+			if (size < smalerThan)
+				result = result.substring(0, matcher.start()) + "1px"
+						+ result.substring(matcher.end());
 		}
 		
 		return result;

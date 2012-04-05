@@ -52,7 +52,8 @@ public class NodeSubstitution implements NodeTranslator {
 		
 		for (Attribute sourceAttribute : source.getAttributes()) {
 			if (translators.containsKey(sourceAttribute.getName())) {
-				AttributeTranslator translator = translators.get(sourceAttribute.getName());
+				AttributeTranslator translator = translators
+						.get(sourceAttribute.getName());
 				
 				Attribute newAttribute = translator.translate(sourceAttribute);
 				

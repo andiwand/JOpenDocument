@@ -23,7 +23,8 @@ public class OpenDocumentSpreadsheet extends OpenDocument {
 		Document metaDocument = metaReader.readDocument();
 		Node metaDocumentStatistics = metaDocument.getRoot().findChildNode(
 				"meta").findChildNode("document-statistic");
-		Attribute metaTableCount = metaDocumentStatistics.findAttribute("table-count");
+		Attribute metaTableCount = metaDocumentStatistics
+				.findAttribute("table-count");
 		tableCount = Integer.valueOf(metaTableCount.getValue());
 	}
 	
@@ -41,8 +42,8 @@ public class OpenDocumentSpreadsheet extends OpenDocument {
 		
 		SaxDocumentReader reader = new SaxDocumentReader(getContent());
 		Document document = reader.readDocument();
-		Node spreadsheet = document.getRoot().findChildNode("body").findChildNode(
-				"spreadsheet");
+		Node spreadsheet = document.getRoot().findChildNode("body")
+				.findChildNode("spreadsheet");
 		
 		for (Node node : spreadsheet.getChildNodes()) {
 			if (!node.getName().equals("table")) continue;

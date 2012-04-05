@@ -17,7 +17,8 @@ public class SpaceNodeSubstitution extends NodeSubstitution {
 		
 		int spaceCount = 1;
 		Attribute countAttribute = source.findAttribute("c");
-		if (countAttribute != null) spaceCount = Integer.valueOf(countAttribute.getValue());
+		if (countAttribute != null)
+			spaceCount = Integer.valueOf(countAttribute.getValue());
 		
 		result.addAttribute(new Attribute("style", "white-space: pre;"));
 		String space = "";

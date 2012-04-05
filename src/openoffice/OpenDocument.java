@@ -13,7 +13,8 @@ public abstract class OpenDocument {
 	private OpenDocumentFile openDocumentFile;
 	
 	public OpenDocument(OpenDocumentFile openDocumentFile) throws IOException {
-		if (!checkMimeType(openDocumentFile.getMimeType())) throw new IllegalMimeTypeException();
+		if (!checkMimeType(openDocumentFile.getMimeType()))
+			throw new IllegalMimeTypeException();
 		
 		this.openDocumentFile = openDocumentFile;
 	}

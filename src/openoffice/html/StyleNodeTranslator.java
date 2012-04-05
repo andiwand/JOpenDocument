@@ -33,7 +33,8 @@ public class StyleNodeTranslator {
 		
 		for (Attribute attribute : source.getAttributes()) {
 			if (translators.containsKey(attribute.getName())) {
-				StyleTranslator styleTranslator = translators.get(attribute.getName());
+				StyleTranslator styleTranslator = translators.get(attribute
+						.getName());
 				
 				result += styleTranslator.translate(attribute);
 			}

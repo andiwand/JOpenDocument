@@ -34,8 +34,11 @@ public class TableAgent extends NodeSubstitution {
 				
 				for (Node cell : row) {
 					int columnsRepeated = 1;
-					Attribute columnsRepeatedAttribute = cell.findAttribute("number-columns-repeated");
-					if (columnsRepeatedAttribute != null) columnsRepeated = Integer.valueOf(columnsRepeatedAttribute.getValue());
+					Attribute columnsRepeatedAttribute = cell
+							.findAttribute("number-columns-repeated");
+					if (columnsRepeatedAttribute != null)
+						columnsRepeated = Integer
+								.valueOf(columnsRepeatedAttribute.getValue());
 					
 					totalColumns += columnsRepeated;
 					
@@ -45,8 +48,11 @@ public class TableAgent extends NodeSubstitution {
 				if (columns > maxColumns) maxColumns = columns;
 				
 				int rowsRepeated = 1;
-				Attribute rowsRepeatedAttribute = childNode.findAttribute("number-rows-repeated");
-				if (rowsRepeatedAttribute != null) rowsRepeated = Integer.valueOf(rowsRepeatedAttribute.getValue());
+				Attribute rowsRepeatedAttribute = childNode
+						.findAttribute("number-rows-repeated");
+				if (rowsRepeatedAttribute != null)
+					rowsRepeated = Integer.valueOf(rowsRepeatedAttribute
+							.getValue());
 				
 				totalRows += rowsRepeated;
 				if (columns != 0) rows = totalRows;
@@ -59,12 +65,16 @@ public class TableAgent extends NodeSubstitution {
 		tableLoop:
 		for (Node childNode : table) {
 			if (childNode.getName().equals("table-column")) {
-				Attribute defaultStyleAttribute = childNode.findAttribute("default-cell-style-name");
+				Attribute defaultStyleAttribute = childNode
+						.findAttribute("default-cell-style-name");
 				if (defaultStyleAttribute == null) continue;
 				
 				int columnsRepeated = 1;
-				Attribute columnsRepeatedAttribute = childNode.findAttribute("number-columns-repeated");
-				if (columnsRepeatedAttribute != null) columnsRepeated = Integer.valueOf(columnsRepeatedAttribute.getValue());
+				Attribute columnsRepeatedAttribute = childNode
+						.findAttribute("number-columns-repeated");
+				if (columnsRepeatedAttribute != null)
+					columnsRepeated = Integer.valueOf(columnsRepeatedAttribute
+							.getValue());
 				
 				for (int i = 0; i < columnsRepeated; i++) {
 					if (styleColumn >= maxColumns) continue tableLoop;
@@ -82,12 +92,16 @@ public class TableAgent extends NodeSubstitution {
 				tableRowLoop:
 				for (Node cell : row) {
 					if (!cell.hasAttribute("style-name")
-							&& (cellIndex < defaultStyles.size())) cell.addAttribute(new Attribute(
-							"table:style-name", defaultStyles.get(cellIndex)));
+							&& (cellIndex < defaultStyles.size()))
+						cell.addAttribute(new Attribute("table:style-name",
+								defaultStyles.get(cellIndex)));
 					
 					int columnsRepeated = 1;
-					Attribute columnsRepeatedAttribute = cell.findAttribute("number-columns-repeated");
-					if (columnsRepeatedAttribute != null) columnsRepeated = Integer.valueOf(columnsRepeatedAttribute.getValue());
+					Attribute columnsRepeatedAttribute = cell
+							.findAttribute("number-columns-repeated");
+					if (columnsRepeatedAttribute != null)
+						columnsRepeated = Integer
+								.valueOf(columnsRepeatedAttribute.getValue());
 					
 					for (int i = 0; i < columnsRepeated; i++) {
 						if (cellIndex >= maxColumns) continue tableRowLoop;
@@ -98,8 +112,11 @@ public class TableAgent extends NodeSubstitution {
 				}
 				
 				int rowsRepeated = 1;
-				Attribute rowsRepeatedAttribute = childNode.findAttribute("number-rows-repeated");
-				if (rowsRepeatedAttribute != null) rowsRepeated = Integer.valueOf(rowsRepeatedAttribute.getValue());
+				Attribute rowsRepeatedAttribute = childNode
+						.findAttribute("number-rows-repeated");
+				if (rowsRepeatedAttribute != null)
+					rowsRepeated = Integer.valueOf(rowsRepeatedAttribute
+							.getValue());
 				
 				for (int i = 0; i < rowsRepeated; i++) {
 					if (tableRow >= rows) continue tableLoop;
