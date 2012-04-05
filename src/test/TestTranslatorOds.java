@@ -5,8 +5,8 @@ import java.io.FileInputStream;
 
 import javax.swing.JFileChooser;
 
-import openoffice.CachedOpenDocumentFile;
 import openoffice.OpenDocumentSpreadsheet;
+import openoffice.TemporaryOpenDocumentFile;
 import openoffice.html.HtmlDocument;
 import openoffice.html.ods.TranslatorOds;
 
@@ -22,7 +22,7 @@ public class TestTranslatorOds {
 		File file = fileChooser.getSelectedFile();
 		FileInputStream inputStream = new FileInputStream(file);
 		
-		CachedOpenDocumentFile documentFile = new CachedOpenDocumentFile(
+		TemporaryOpenDocumentFile documentFile = new TemporaryOpenDocumentFile(
 				inputStream);
 		OpenDocumentSpreadsheet spreadsheet = new OpenDocumentSpreadsheet(
 				documentFile);

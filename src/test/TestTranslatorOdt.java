@@ -5,8 +5,8 @@ import java.io.FileInputStream;
 
 import javax.swing.JFileChooser;
 
-import openoffice.CachedOpenDocumentFile;
 import openoffice.OpenDocumentText;
+import openoffice.TemporaryOpenDocumentFile;
 import openoffice.html.HtmlDocument;
 import openoffice.html.ImageCache;
 import openoffice.html.ImageTranslator;
@@ -27,7 +27,7 @@ public class TestTranslatorOdt {
 		ImageCache imageCache = new ImageCache(tmp, false);
 		
 		FileInputStream inputStream = new FileInputStream(file);
-		CachedOpenDocumentFile documentFile = new CachedOpenDocumentFile(
+		TemporaryOpenDocumentFile documentFile = new TemporaryOpenDocumentFile(
 				inputStream);
 		OpenDocumentText text = new OpenDocumentText(documentFile);
 		TranslatorOdt translatorOdt = new TranslatorOdt(text);
