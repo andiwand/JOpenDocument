@@ -7,8 +7,8 @@ public class OpenDocumentText extends OpenDocument {
 	
 	public static final String MIMETYPE = "application/vnd.oasis.opendocument.text";
 	
-	
-	public OpenDocumentText(OpenDocumentFile openDocumentFile) throws IOException {
+	public OpenDocumentText(OpenDocumentFile openDocumentFile)
+			throws IOException {
 		super(openDocumentFile);
 	}
 	

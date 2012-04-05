@@ -15,8 +15,8 @@ public class DocumentUtil {
 	
 	private DocumentUtil() {}
 	
-	
-	public static Document readDocument(InputStream inputStream) throws IOException, ParserConfigurationException, SAXException {
+	public static Document readDocument(InputStream inputStream)
+			throws IOException, ParserConfigurationException, SAXException {
 		DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
 		DocumentBuilder builder = factory.newDocumentBuilder();
 		Document document = builder.parse(inputStream);

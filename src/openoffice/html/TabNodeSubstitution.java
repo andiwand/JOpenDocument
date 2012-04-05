@@ -11,7 +11,6 @@ public class TabNodeSubstitution extends NodeSubstitution {
 		super("tab", "span");
 	}
 	
-	
 	@Override
 	public Node translateNode(Node source) {
 		Node result = super.translateNode(source);

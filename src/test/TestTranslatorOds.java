@@ -22,9 +22,10 @@ public class TestTranslatorOds {
 		File file = fileChooser.getSelectedFile();
 		FileInputStream inputStream = new FileInputStream(file);
 		
-		
-		CachedOpenDocumentFile documentFile = new CachedOpenDocumentFile(inputStream);
-		OpenDocumentSpreadsheet spreadsheet = new OpenDocumentSpreadsheet(documentFile);
+		CachedOpenDocumentFile documentFile = new CachedOpenDocumentFile(
+				inputStream);
+		OpenDocumentSpreadsheet spreadsheet = new OpenDocumentSpreadsheet(
+				documentFile);
 		System.out.println(spreadsheet.getTableNames());
 		TranslatorOds translatorOds = new TranslatorOds(spreadsheet);
 		

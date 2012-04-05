@@ -13,7 +13,6 @@ public class ImageCache {
 	
 	private boolean autoClean;
 	
-	
 	public ImageCache(File directory, boolean autoClean) {
 		this.directory = directory;
 		
@@ -29,10 +28,10 @@ public class ImageCache {
 			}
 		});
 	}
+	
 	public ImageCache(String directory, boolean autoClean) {
 		this(new File(directory), autoClean);
 	}
-	
 	
 	public File getDirectory() {
 		return directory;
@@ -54,11 +53,9 @@ public class ImageCache {
 		return new File(directory, image);
 	}
 	
-	
 	public void setAutoClean(boolean autoClean) {
 		this.autoClean = autoClean;
 	}
-	
 	
 	public File newImage(String image) {
 		File imageFile = new File(directory, image);
@@ -69,7 +66,6 @@ public class ImageCache {
 		
 		return imageFile;
 	}
-	
 	
 	public void clean() {
 		for (File cachedImage : cachedImages) {

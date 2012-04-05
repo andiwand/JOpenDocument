@@ -12,19 +12,17 @@ public class HtmlDocument {
 	
 	public final Document htmlDocument;
 	
-	
 	public HtmlDocument() {
 		htmlDocument = new Document(new RootNode("html"));
 	}
 	
-	
 	public Document getHtmlDocument() {
 		return htmlDocument;
 	}
+	
 	public RootNode getHtmlNode() {
 		return htmlDocument.getRoot();
 	}
-	
 	
 	public void save(File file) throws IOException {
 		FileWriter writer = new FileWriter(file);
@@ -35,6 +33,7 @@ public class HtmlDocument {
 		writer.flush();
 		writer.close();
 	}
+	
 	public void save(String file) throws IOException {
 		save(new File(file));
 	}

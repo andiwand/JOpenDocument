@@ -14,10 +14,9 @@ public class Node extends Element {
 	private String name;
 	List<Attribute> attributes;
 	
-	
 	public Node(String qName) {
-		if (qName == null)
-			throw new NullPointerException("The argument 'qName' must not be null!");
+		if (qName == null) throw new NullPointerException(
+				"The argument 'qName' must not be null!");
 		
 		this.children = new ArrayList<Element>();
 		
@@ -32,9 +31,10 @@ public class Node extends Element {
 		
 		this.attributes = new ArrayList<Attribute>();
 	}
+	
 	public Node(String namespace, String name) {
-		if (name == null)
-			throw new NullPointerException("The argument 'name' must not be null!");
+		if (name == null) throw new NullPointerException(
+				"The argument 'name' must not be null!");
 		
 		this.children = new ArrayList<Element>();
 		
@@ -42,6 +42,7 @@ public class Node extends Element {
 		this.name = name;
 		this.attributes = new ArrayList<Attribute>();
 	}
+	
 	public Node(Node node) {
 		this(node.namespace, node.name);
 		
@@ -53,7 +54,6 @@ public class Node extends Element {
 			addAttribute(new Attribute(attribute));
 		}
 	}
-	
 	
 	public String toString() {
 		StringBuilder builder = new StringBuilder();
@@ -74,11 +74,9 @@ public class Node extends Element {
 		
 		builder.append(">");
 		
-		
 		for (Element child : children) {
 			builder.append(child.toString());
 		}
-		
 		
 		builder.append("</");
 		
@@ -92,6 +90,7 @@ public class Node extends Element {
 		
 		return builder.toString();
 	}
+	
 	public boolean equals(Object object) {
 		if (object == null) return false;
 		if (object == this) return true;
@@ -100,10 +99,10 @@ public class Node extends Element {
 		
 		return name.equals(node.name);
 	}
+	
 	public Element clone() {
 		return new Node(this);
 	}
-	
 	
 	public boolean hasAttribute(String name) {
 		for (Attribute attribute : attributes) {
@@ -116,6 +115,7 @@ public class Node extends Element {
 	public List<Element> getChildren() {
 		return Collections.unmodifiableList(children);
 	}
+	
 	public List<Node> getChildNodes() {
 		List<Node> result = new ArrayList<Node>();
 		
@@ -125,6 +125,7 @@ public class Node extends Element {
 		
 		return result;
 	}
+	
 	public List<Content> getChildContent() {
 		List<Content> result = new ArrayList<Content>();
 		
@@ -134,6 +135,7 @@ public class Node extends Element {
 		
 		return result;
 	}
+	
 	public String getContent() {
 		StringBuilder builder = new StringBuilder();
 		
@@ -147,18 +149,21 @@ public class Node extends Element {
 	public boolean hasNamespace() {
 		return namespace != null;
 	}
+	
 	public String getNamespace() {
 		return namespace;
 	}
+	
 	public String getName() {
 		return name;
 	}
+	
 	public String getQName() {
-		if ((namespace != null) && (namespace.length() != 0))
-			return namespace + ":" + name;
-		else
-			return name;
+		if ((namespace != null) && (namespace.length() != 0)) return namespace
+				+ ":" + name;
+		else return name;
 	}
+	
 	public List<Attribute> getAttributes() {
 		return Collections.unmodifiableList(attributes);
 	}
@@ -167,19 +172,20 @@ public class Node extends Element {
 		return children.isEmpty();
 	}
 	
-	
 	public void setNamespace(String namespace) {
 		this.namespace = namespace;
 	}
+	
 	public void setName(String name) {
-		if (name == null)
-			throw new NullPointerException("The argument 'name' must not be null!");
+		if (name == null) throw new NullPointerException(
+				"The argument 'name' must not be null!");
 		
 		this.name = name;
 	}
+	
 	public void getQName(String qName) {
-		if (qName == null)
-			throw new NullPointerException("The argument 'qName' must not be null!");
+		if (qName == null) throw new NullPointerException(
+				"The argument 'qName' must not be null!");
 		
 		String[] parts = qName.split(":");
 		
@@ -191,7 +197,6 @@ public class Node extends Element {
 		}
 	}
 	
-	
 	public boolean addChild(Element child) {
 		if (child == this) return false;
 		if (child.parent != null) return false;
@@ -202,6 +207,7 @@ public class Node extends Element {
 		
 		return true;
 	}
+	
 	public boolean removeChild(Element child) {
 		if (child == this) return false;
 		if (parent != this) return false;
@@ -221,6 +227,7 @@ public class Node extends Element {
 		
 		return true;
 	}
+	
 	public boolean addAttributes(Collection<Attribute> attributes) {
 		boolean result = false;
 		
@@ -230,6 +237,7 @@ public class Node extends Element {
 		
 		return result;
 	}
+	
 	public boolean removeAttribute(Attribute attribute) {
 		if (attribute.node != this) return false;
 		
@@ -239,7 +247,6 @@ public class Node extends Element {
 		return true;
 	}
 	
-	
 	public void clearChildren() {
 		for (Element element : children) {
 			element.parent = null;
@@ -247,6 +254,7 @@ public class Node extends Element {
 		
 		children.clear();
 	}
+	
 	public void clearAttributes() {
 		for (Attribute attribute : attributes) {
 			attribute.node = null;
@@ -254,7 +262,6 @@ public class Node extends Element {
 		
 		attributes.clear();
 	}
-	
 	
 	public Node findChildNode(String name) {
 		Node result = null;
@@ -272,6 +279,7 @@ public class Node extends Element {
 		
 		return result;
 	}
+	
 	public Attribute findAttribute(String name) {
 		Attribute result = null;
 		

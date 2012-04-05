@@ -14,8 +14,8 @@ public class NodeSubstitution implements NodeTranslator {
 	
 	private Map<String, AttributeTranslator> translators;
 	
-	
-	public NodeSubstitution(String source, String destination, AttributeSubstitution... substitutions) {
+	public NodeSubstitution(String source, String destination,
+			AttributeSubstitution... substitutions) {
 		this.source = source;
 		this.destination = destination;
 		
@@ -26,22 +26,24 @@ public class NodeSubstitution implements NodeTranslator {
 		}
 	}
 	
-	
 	public String getSource() {
 		return source;
 	}
+	
 	public String getDestination() {
 		return destination;
 	}
 	
-	
-	public void addAttributeTranslator(String source, AttributeTranslator attributeTranslator) {
+	public void addAttributeTranslator(String source,
+			AttributeTranslator attributeTranslator) {
 		translators.put(source, attributeTranslator);
 	}
-	public void addAttributeSubstitution(AttributeSubstitution attributeSubstitution) {
-		translators.put(attributeSubstitution.getSource(), attributeSubstitution);
-	}
 	
+	public void addAttributeSubstitution(
+			AttributeSubstitution attributeSubstitution) {
+		translators.put(attributeSubstitution.getSource(),
+				attributeSubstitution);
+	}
 	
 	public Node translateNode(Node source) {
 		if (!source.getName().equals(this.source)) return null;
@@ -50,7 +52,7 @@ public class NodeSubstitution implements NodeTranslator {
 		
 		for (Attribute sourceAttribute : source.getAttributes()) {
 			if (translators.containsKey(sourceAttribute.getName())) {
-				AttributeTranslator translator  = translators.get(sourceAttribute.getName());
+				AttributeTranslator translator = translators.get(sourceAttribute.getName());
 				
 				Attribute newAttribute = translator.translate(sourceAttribute);
 				

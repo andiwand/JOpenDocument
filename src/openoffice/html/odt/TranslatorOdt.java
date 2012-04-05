@@ -46,11 +46,13 @@ public class TranslatorOdt {
 	
 	private Map<String, String> parentStyles;
 	
-	
-	public TranslatorOdt(OpenDocumentText documentText) throws ParserConfigurationException, SAXException, IOException {
-		SaxDocumentReader styleReader = new SaxDocumentReader(documentText.getStyles());
+	public TranslatorOdt(OpenDocumentText documentText)
+			throws ParserConfigurationException, SAXException, IOException {
+		SaxDocumentReader styleReader = new SaxDocumentReader(
+				documentText.getStyles());
 		style = styleReader.readDocument();
-		SaxDocumentReader contentReader = new SaxDocumentReader(documentText.getContent());
+		SaxDocumentReader contentReader = new SaxDocumentReader(
+				documentText.getContent());
 		content = contentReader.readDocument();
 		
 		styleNodeTranslators = new HashMap<String, StyleNodeTranslator>();
@@ -60,33 +62,30 @@ public class TranslatorOdt {
 		
 		parentStyles = new HashMap<String, String>();
 		
-		
 		addStyleNodeTranslator("paragraph-properties", new StyleNodeTranslator(
-				new StyleSubstitution("text-align", "text-align")
-		));
+				new StyleSubstitution("text-align", "text-align")));
 		addStyleNodeTranslator("text-properties", new StyleNodeTranslator(
 				new StyleSubstitution("font-size", "font-size"),
 				new StyleSubstitution("font-weight", "font-weight"),
 				new StyleSubstitution("font-style", "font-style"),
-				new UnderlineStyleSubstitution()
-		));
-		addStyleNodeTranslator("table-properties", new TableStyleNodeTranslator(
-				new StyleSubstitution("width", "width")
-		));
+				new UnderlineStyleSubstitution()));
+		addStyleNodeTranslator("table-properties",
+				new TableStyleNodeTranslator(new StyleSubstitution("width",
+						"width")));
 		addStyleNodeTranslator("table-row-properties", new StyleNodeTranslator(
-				new StyleSubstitution("row-height", "height")
-		));
-		addStyleNodeTranslator("table-column-properties", new StyleNodeTranslator(
-				new StyleSubstitution("column-width", "width")
-		));
-		addStyleNodeTranslator("table-cell-properties", new StyleNodeTranslator(
-				new StyleSubstitution("padding", "padding"),
-				new StyleSizeSubstitution("border", "border"),
-				new StyleSizeSubstitution("border-top", "border-top"),
-				new StyleSizeSubstitution("border-right", "border-right"),
-				new StyleSizeSubstitution("border-bottom", "border-bottom"),
-				new StyleSizeSubstitution("border-left", "border-left")
-		));
+				new StyleSubstitution("row-height", "height")));
+		addStyleNodeTranslator("table-column-properties",
+				new StyleNodeTranslator(new StyleSubstitution("column-width",
+						"width")));
+		addStyleNodeTranslator("table-cell-properties",
+				new StyleNodeTranslator(new StyleSubstitution("padding",
+						"padding"), new StyleSizeSubstitution("border",
+						"border"), new StyleSizeSubstitution("border-top",
+						"border-top"), new StyleSizeSubstitution(
+						"border-right", "border-right"),
+						new StyleSizeSubstitution("border-bottom",
+								"border-bottom"), new StyleSizeSubstitution(
+								"border-left", "border-left")));
 		
 		addNodeSubstitution(new TextNodeSubstitution("p", "p"));
 		addNodeSubstitution(new TextNodeSubstitution("h", "p"));
@@ -94,43 +93,44 @@ public class TranslatorOdt {
 		addNodeSubstitution(new TabNodeSubstitution());
 		addNodeSubstitution(new SpaceNodeSubstitution());
 		addNodeSubstitution(new NodeSubstitution("a", "a",
-				new AttributeSubstitution("href", "href")
-		));
+				new AttributeSubstitution("href", "href")));
 		addNodeSubstitution(new TableAgent());
 		addNodeSubstitution(new NodeSubstitution("table-row", "tr",
-				new AttributeSubstitution("number-rows-repeated", "rowspan")
-		));
+				new AttributeSubstitution("number-rows-repeated", "rowspan")));
 		addNodeSubstitution(new NodeSubstitution("table-cell", "td",
 				new AttributeSubstitution("number-rows-spanned", "rowspan"),
-				new AttributeSubstitution("number-columns-spanned", "colspan")
-		));
+				new AttributeSubstitution("number-columns-spanned", "colspan")));
 		addNodeSubstitution(new NodeSubstitution("table-column", "colgroup",
-				new AttributeSubstitution("number-columns-repeated", "span")
-		));
+				new AttributeSubstitution("number-columns-repeated", "span")));
 		addNodeSubstitution(new TextNodeSubstitution("frame", "span"));
 		
-		addAttributeTranslators("style-name", new ClassAttributeTranslator(parentStyles));
+		addAttributeTranslators("style-name", new ClassAttributeTranslator(
+				parentStyles));
 	}
 	
-	
-	public void addStyleNodeTranslator(String source, StyleNodeTranslator styleNodeTranslator) {
+	public void addStyleNodeTranslator(String source,
+			StyleNodeTranslator styleNodeTranslator) {
 		styleNodeTranslators.put(source, styleNodeTranslator);
 	}
 	
 	public void addNodeTranslator(String source, NodeTranslator nodeTranslator) {
 		translators.put(source, nodeTranslator);
 	}
+	
 	public void addNodeSubstitution(NodeSubstitution nodeSubstitution) {
 		addNodeTranslator(nodeSubstitution.getSource(), nodeSubstitution);
 	}
 	
-	public void addAttributeTranslators(String source, AttributeTranslator attributeTranslator) {
+	public void addAttributeTranslators(String source,
+			AttributeTranslator attributeTranslator) {
 		attributeTranslators.put(source, attributeTranslator);
 	}
-	public void addAttributeSubstitution(AttributeSubstitution attributeSubstitution) {
-		addAttributeTranslators(attributeSubstitution.getSource(), attributeSubstitution);
-	}
 	
+	public void addAttributeSubstitution(
+			AttributeSubstitution attributeSubstitution) {
+		addAttributeTranslators(attributeSubstitution.getSource(),
+				attributeSubstitution);
+	}
 	
 	public HtmlDocument translate() {
 		HtmlDocument result = new HtmlDocument();
@@ -150,14 +150,14 @@ public class TranslatorOdt {
 		
 		cssString = cssString.replaceAll("%", "&#37;");
 		
-		
 		Node htmlHeadNode = new Node("head");
 		
-		/*Node meta = new Node("meta");
-		meta.addAttribute(new Attribute("http-equiv", "Content-Type"));
-		meta.addAttribute(new Attribute("content", "text/html; charset=utf-8"));
-		
-		head.addChild(meta);*/
+		/*
+		 * Node meta = new Node("meta"); meta.addAttribute(new
+		 * Attribute("http-equiv", "Content-Type")); meta.addAttribute(new
+		 * Attribute("content", "text/html; charset=utf-8"));
+		 * head.addChild(meta);
+		 */
 		
 		Node htmlTitleNode = new Node("title");
 		htmlTitleNode.addChild(new Content("_title_"));
@@ -175,8 +175,6 @@ public class TranslatorOdt {
 		return result;
 	}
 	
-	
-	
 	private String handleStyle(Node style) {
 		StringBuilder cssStringBuilder = new StringBuilder();
 		
@@ -185,8 +183,10 @@ public class TranslatorOdt {
 			
 			Attribute parentAttribute = styleNode.findAttribute("parent-style-name");
 			if (parentAttribute != null) {
-				String name = styleNode.findAttribute("name").getValue().replaceAll("\\.", "_");
-				String parentName = parentAttribute.getValue().replaceAll("\\.", "_");
+				String name = styleNode.findAttribute("name").getValue().replaceAll(
+						"\\.", "_");
+				String parentName = parentAttribute.getValue().replaceAll(
+						"\\.", "_");
 				
 				parentStyles.put(name, parentName);
 			}
@@ -219,6 +219,7 @@ public class TranslatorOdt {
 		
 		return body;
 	}
+	
 	private void handleContentImpl(Node content, Node parent) {
 		for (Element childElement : content.getChildren()) {
 			if (childElement instanceof Node) {

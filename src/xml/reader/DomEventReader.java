@@ -14,22 +14,20 @@ public class DomEventReader extends XmlEventReader {
 	
 	private List<DomEventListener> listeners;
 	
-	
 	public DomEventReader() {
 		listeners = new ArrayList<DomEventListener>();
 	}
 	
-	
 	public void addListener(DomEventListener listener) {
 		listeners.add(listener);
 	}
-	
 	
 	public void readDocument(Document document) {
 		RootNode rootNode = document.getRoot();
 		
 		readDocumentImpl(rootNode);
 	}
+	
 	private void readDocumentImpl(Node node) {
 		for (DomEventListener listener : listeners) {
 			if (listener.matchNode(node)) listener.nodeOccurred(node);

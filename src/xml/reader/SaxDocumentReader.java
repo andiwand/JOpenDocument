@@ -24,14 +24,13 @@ public class SaxDocumentReader extends XmlDocumentReader {
 	private InputStream inputStream;
 	private SAXParser parser;
 	
-	
-	public SaxDocumentReader(InputStream inputStream) throws ParserConfigurationException, SAXException {
+	public SaxDocumentReader(InputStream inputStream)
+			throws ParserConfigurationException, SAXException {
 		this.inputStream = inputStream;
 		
 		SAXParserFactory parserFactory = SAXParserFactory.newInstance();
 		parser = parserFactory.newSAXParser();
 	}
-	
 	
 	public Document readDocument() throws IOException, SAXException {
 		XmlSaxHandler handler = new XmlSaxHandler();
@@ -41,11 +40,9 @@ public class SaxDocumentReader extends XmlDocumentReader {
 		return handler.getDocument();
 	}
 	
-	
 	public void close() throws IOException {
 		inputStream.close();
 	}
-	
 	
 	private static class XmlSaxHandler extends DefaultHandler {
 		private Document document;
@@ -61,19 +58,21 @@ public class SaxDocumentReader extends XmlDocumentReader {
 			document = new Document(rootNode);
 		}
 		
-		public void startElement(String uri, String localName, String qName, Attributes attributes) throws SAXException {
-			if (((qName != null) && (qName.length() == 0)) && (localName.length() != 0))
-				qName = localName;
+		public void startElement(String uri, String localName, String qName,
+				Attributes attributes) throws SAXException {
+			if (((qName != null) && (qName.length() == 0))
+					&& (localName.length() != 0)) qName = localName;
 			
 			Node newNode = new Node(qName);
 			
 			for (int i = 0; i < attributes.getLength(); i++) {
 				String attributeQName = attributes.getQName(i);
 				
-				if (((attributeQName != null) && (attributeQName.length() == 0)) && (localName.length() != 0))
-					attributeQName = attributes.getLocalName(i);
+				if (((attributeQName != null) && (attributeQName.length() == 0))
+						&& (localName.length() != 0)) attributeQName = attributes.getLocalName(i);
 				
-				Attribute attribute = new Attribute(attributeQName, attributes.getValue(i));
+				Attribute attribute = new Attribute(attributeQName,
+						attributes.getValue(i));
 				
 				newNode.addAttribute(attribute);
 			}
@@ -89,19 +88,21 @@ public class SaxDocumentReader extends XmlDocumentReader {
 			
 			depth++;
 		}
-		public void endElement(String uri, String localName, String qName) throws SAXException {
+		
+		public void endElement(String uri, String localName, String qName)
+				throws SAXException {
 			activeNode = activeNode.getParent();
 			
 			depth--;
 		}
 		
-		public void characters(char[] ch, int start, int length) throws SAXException {
+		public void characters(char[] ch, int start, int length)
+				throws SAXException {
 			String contentString = new String(ch, start, length);
 			Content content = new Content(contentString);
 			
 			activeNode.addChild(content);
 		}
-		
 		
 	}
 	

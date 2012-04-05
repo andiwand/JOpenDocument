@@ -9,7 +9,6 @@ public class TableStyleNodeTranslator extends StyleNodeTranslator {
 		super(substitutions);
 	}
 	
-	
 	public String translate(Node source) {
 		String result = super.translate(source);
 		

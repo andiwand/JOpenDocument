@@ -9,7 +9,6 @@ public class UnderlineStyleSubstitution extends StyleSubstitution {
 		super("text-underline-style", "text-decoration");
 	}
 	
-	
 	@Override
 	public String translate(Attribute source) {
 		if (!source.getName().equals("text-underline-style")) return null;

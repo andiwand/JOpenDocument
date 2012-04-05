@@ -20,13 +20,11 @@ public class ImageTranslator implements NodeTranslator {
 	
 	private URITranslator uriTranslator;
 	
-	
 	public ImageTranslator(OpenDocument document, ImageCache imageCache) {
 		this.document = document;
 		
 		this.imageCache = imageCache;
 	}
-	
 	
 	public URITranslator getUriTranslator() {
 		return uriTranslator;
@@ -36,20 +34,19 @@ public class ImageTranslator implements NodeTranslator {
 		this.uriTranslator = uriTranslator;
 	}
 	
-	
 	public Node translateNode(Node source) {
 		try {
 			String imagePath = source.findAttribute("href").getValue();
 			if (imagePath.startsWith("./")) imagePath = imagePath.substring(2);
 			String imageName = new File(imagePath).getName();
 			
-			InputStream inputStream = document.getOpenDocumentFile().getFileStream(imagePath);
+			InputStream inputStream = document.getOpenDocumentFile().getFileStream(
+					imagePath);
 			
 			File tmpFile = imageCache.newImage(imageName);
 			FileOutputStream outputStream = new FileOutputStream(tmpFile);
 			
 			pipeImage(inputStream, outputStream);
-			
 			
 			URI tmpFileUri = tmpFile.getAbsoluteFile().toURI();
 			if (uriTranslator != null) tmpFileUri = uriTranslator.translate(tmpFileUri);
@@ -77,8 +74,8 @@ public class ImageTranslator implements NodeTranslator {
 		return null;
 	}
 	
-	
-	private static void pipeImage(InputStream inputStream, OutputStream outputStream) throws IOException {
+	private static void pipeImage(InputStream inputStream,
+			OutputStream outputStream) throws IOException {
 		byte[] buffer = new byte[512];
 		int read = 0;
 		

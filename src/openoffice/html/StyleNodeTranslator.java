@@ -11,7 +11,6 @@ public class StyleNodeTranslator {
 	
 	private Map<String, StyleTranslator> translators;
 	
-	
 	public StyleNodeTranslator(StyleSubstitution... substitutions) {
 		translators = new HashMap<String, StyleTranslator>();
 		
@@ -20,14 +19,14 @@ public class StyleNodeTranslator {
 		}
 	}
 	
-	
-	public void addStyleTranslator(String source, StyleTranslator styleTranslator) {
+	public void addStyleTranslator(String source,
+			StyleTranslator styleTranslator) {
 		translators.put(source, styleTranslator);
 	}
+	
 	public void addStyleSubstitution(StyleSubstitution styleSubstitution) {
 		addStyleTranslator(styleSubstitution.getSource(), styleSubstitution);
 	}
-	
 	
 	public String translate(Node source) {
 		String result = "";

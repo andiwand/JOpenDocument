@@ -9,11 +9,9 @@ public class ClassAttributeTranslator implements AttributeTranslator {
 	
 	private final Map<String, String> parentStyles;
 	
-	
 	public ClassAttributeTranslator(Map<String, String> parentStyles) {
 		this.parentStyles = parentStyles;
 	}
-	
 	
 	public Attribute translate(Attribute source) {
 		if (!source.getName().equals("style-name")) return null;

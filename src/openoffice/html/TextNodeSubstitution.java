@@ -6,10 +6,10 @@ import xml.Node;
 
 public class TextNodeSubstitution extends NodeSubstitution {
 	
-	public TextNodeSubstitution(String source, String destination, AttributeSubstitution... substitutions) {
+	public TextNodeSubstitution(String source, String destination,
+			AttributeSubstitution... substitutions) {
 		super(source, destination, substitutions);
 	}
-	
 	
 	@Override
 	public Node translateNode(Node source) {

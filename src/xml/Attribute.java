@@ -23,13 +23,11 @@ public class Attribute extends XmlObject {
 		return result;
 	}
 	
-	
 	Node node;
 	
 	private String namespace;
 	private String name;
 	private String value;
-	
 	
 	public Attribute(String qName) {
 		if (qName == null) throw new NullPointerException("qName is null");
@@ -47,15 +45,16 @@ public class Attribute extends XmlObject {
 		
 		this.value = "";
 	}
+	
 	public Attribute(String qName, String value) {
 		this(qName);
 		
 		this.value = value;
 	}
+	
 	public Attribute(Attribute attribute) {
 		this(attribute.getQName(), attribute.value);
 	}
-	
 	
 	public String toString() {
 		StringBuilder builder = new StringBuilder();
@@ -72,6 +71,7 @@ public class Attribute extends XmlObject {
 		
 		return builder.toString();
 	}
+	
 	public boolean equals(Object object) {
 		if (object == null) return false;
 		if (object == this) return true;
@@ -80,10 +80,10 @@ public class Attribute extends XmlObject {
 		
 		return name.equals(attribute.name) && value.equals(attribute.value);
 	}
+	
 	public Attribute clone() {
 		return new Attribute(this);
 	}
-	
 	
 	public Node getNode() {
 		return node;
@@ -92,17 +92,19 @@ public class Attribute extends XmlObject {
 	public String getNamespace() {
 		return namespace;
 	}
+	
 	public String getName() {
 		return name;
 	}
+	
 	public String getQName() {
 		if (namespace == null) return name;
 		else return namespace + ":" + name;
 	}
+	
 	public String getValue() {
 		return value;
 	}
-	
 	
 	public void setNode(Node newNode) {
 		if (node != null) node.attributes.remove(this);
@@ -115,16 +117,20 @@ public class Attribute extends XmlObject {
 	}
 	
 	public void setNamespace(String namespace) {
-		if (namespace.length() == 0) throw new IllegalArgumentException("namespace is empty");
+		if (namespace.length() == 0) throw new IllegalArgumentException(
+				"namespace is empty");
 		
 		this.namespace = namespace;
 	}
+	
 	public void setName(String name) {
 		if (name == null) throw new NullPointerException("name is null");
-		if (name.length() == 0) throw new IllegalArgumentException("name is empty");
+		if (name.length() == 0) throw new IllegalArgumentException(
+				"name is empty");
 		
 		this.name = name;
 	}
+	
 	public void setQName(String qName) {
 		if (qName == null) throw new NullPointerException("qName is null");
 		
@@ -137,6 +143,7 @@ public class Attribute extends XmlObject {
 			this.name = parts[1];
 		}
 	}
+	
 	public void setValue(String value) {
 		if (value == null) throw new NullPointerException("value is null");
 		

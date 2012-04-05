@@ -24,16 +24,16 @@ public class TestTranslatorOdt {
 		File file = fileChooser.getSelectedFile();
 		File tmp = new File("/home/andreas/tmp");
 		
-		
 		ImageCache imageCache = new ImageCache(tmp, false);
 		
 		FileInputStream inputStream = new FileInputStream(file);
-		CachedOpenDocumentFile documentFile = new CachedOpenDocumentFile(inputStream);
+		CachedOpenDocumentFile documentFile = new CachedOpenDocumentFile(
+				inputStream);
 		OpenDocumentText text = new OpenDocumentText(documentFile);
 		TranslatorOdt translatorOdt = new TranslatorOdt(text);
 		
 		ImageTranslator imageTranslator = new ImageTranslator(text, imageCache);
-		//imageTranslator.setUriTranslator(new AndroidImageUriTranslator());
+		// imageTranslator.setUriTranslator(new AndroidImageUriTranslator());
 		translatorOdt.addNodeTranslator("image", imageTranslator);
 		
 		HtmlDocument pageOdt = translatorOdt.translate();

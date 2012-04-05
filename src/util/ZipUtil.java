@@ -12,8 +12,8 @@ public class ZipUtil {
 	
 	private ZipUtil() {}
 	
-	
-	public static Set<String> getEntries(InputStream inputStream) throws IOException {
+	public static Set<String> getEntries(InputStream inputStream)
+			throws IOException {
 		HashSet<String> pathSet = new HashSet<String>();
 		
 		ZipInputStream zipInputStream = new ZipInputStream(inputStream);
@@ -31,13 +31,13 @@ public class ZipUtil {
 		return pathSet;
 	}
 	
-	public static InputStream getEntry(InputStream inputStream, String path) throws IOException {
+	public static InputStream getEntry(InputStream inputStream, String path)
+			throws IOException {
 		ZipInputStream zipInputStream = new ZipInputStream(inputStream);
 		
 		ZipEntry entry = zipInputStream.getNextEntry();
 		while (entry != null) {
-			if (entry.getName().equals(path))
-				return zipInputStream;
+			if (entry.getName().equals(path)) return zipInputStream;
 			
 			zipInputStream.closeEntry();
 			entry = zipInputStream.getNextEntry();
