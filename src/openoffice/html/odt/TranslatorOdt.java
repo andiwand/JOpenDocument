@@ -39,28 +39,18 @@ public class TranslatorOdt {
 	private Document style;
 	private Document content;
 	
-	private Map<String, StyleNodeTranslator> styleNodeTranslators;
+	private Map<String, StyleNodeTranslator> styleNodeTranslators = new HashMap<String, StyleNodeTranslator>();
 	
-	private Map<String, NodeTranslator> translators;
-	private Map<String, AttributeTranslator> attributeTranslators;
+	private Map<String, NodeTranslator> translators = new HashMap<String, NodeTranslator>();
+	private Map<String, AttributeTranslator> attributeTranslators = new HashMap<String, AttributeTranslator>();
 	
-	private Map<String, String> parentStyles;
+	private Map<String, String> parentStyles = new HashMap<String, String>();
 	
 	public TranslatorOdt(OpenDocumentText documentText)
 			throws ParserConfigurationException, SAXException, IOException {
-		SaxDocumentReader styleReader = new SaxDocumentReader(documentText
-				.getStyles());
-		style = styleReader.readDocument();
-		SaxDocumentReader contentReader = new SaxDocumentReader(documentText
-				.getContent());
-		content = contentReader.readDocument();
-		
-		styleNodeTranslators = new HashMap<String, StyleNodeTranslator>();
-		
-		translators = new HashMap<String, NodeTranslator>();
-		attributeTranslators = new HashMap<String, AttributeTranslator>();
-		
-		parentStyles = new HashMap<String, String>();
+		style = new SaxDocumentReader(documentText.getStyles()).readDocument();
+		content = new SaxDocumentReader(documentText.getContent())
+				.readDocument();
 		
 		addStyleNodeTranslator("paragraph-properties", new StyleNodeTranslator(
 				new StyleSubstitution("text-align", "text-align")));

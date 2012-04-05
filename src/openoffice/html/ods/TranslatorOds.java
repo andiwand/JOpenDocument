@@ -41,30 +41,21 @@ public class TranslatorOds {
 	private Document style;
 	private Document content;
 	
-	private Map<String, StyleNodeTranslator> styleNodeTranslators;
+	private Map<String, StyleNodeTranslator> styleNodeTranslators = new HashMap<String, StyleNodeTranslator>();
 	
-	private Map<String, NodeTranslator> translators;
-	private Map<String, AttributeTranslator> attributeTranslators;
+	private Map<String, NodeTranslator> translators = new HashMap<String, NodeTranslator>();
+	private Map<String, AttributeTranslator> attributeTranslators = new HashMap<String, AttributeTranslator>();
 	
-	private Map<String, String> parentStyles;
+	private Map<String, String> parentStyles = new HashMap<String, String>();
 	
 	public TranslatorOds(OpenDocumentSpreadsheet documentSpreadsheet)
 			throws ParserConfigurationException, SAXException, IOException {
 		this.documentSpreadsheet = documentSpreadsheet;
 		
-		SaxDocumentReader styleReader = new SaxDocumentReader(
-				documentSpreadsheet.getStyles());
-		style = styleReader.readDocument();
-		SaxDocumentReader contentReader = new SaxDocumentReader(
-				documentSpreadsheet.getContent());
-		content = contentReader.readDocument();
-		
-		styleNodeTranslators = new HashMap<String, StyleNodeTranslator>();
-		
-		translators = new HashMap<String, NodeTranslator>();
-		attributeTranslators = new HashMap<String, AttributeTranslator>();
-		
-		parentStyles = new HashMap<String, String>();
+		style = new SaxDocumentReader(documentSpreadsheet.getStyles())
+				.readDocument();
+		content = new SaxDocumentReader(documentSpreadsheet.getContent())
+				.readDocument();
 		
 		addStyleNodeTranslator("paragraph-properties", new StyleNodeTranslator(
 				new StyleSubstitution("text-align", "text-align")));
@@ -144,11 +135,11 @@ public class TranslatorOds {
 		return translate(table, 1);
 	}
 	
-	public HtmlDocument translate(int startTable, int countTable) {
-		if (countTable <= 0)
+	public HtmlDocument translate(int startTable, int tableCount) {
+		if (tableCount <= 0)
 			throw new IndexOutOfBoundsException(
-					"countTable must be greater than 0!");
-		if ((startTable + countTable) > documentSpreadsheet.getTableCount())
+					"tableCount must be greater than 0!");
+		if ((startTable + tableCount) > documentSpreadsheet.getTableCount())
 			throw new IndexOutOfBoundsException("startTable out of range!");
 		
 		HtmlDocument result = new HtmlDocument();
@@ -168,7 +159,7 @@ public class TranslatorOds {
 		Node newContent = new Node(content.getQName());
 		int table = 0;
 		for (Node contentTable : content.getChildNodes()) {
-			if (table >= (startTable + countTable)) break;
+			if (table >= (startTable + tableCount)) break;
 			
 			if (contentTable.getName().equals("table")) {
 				if (table++ < startTable) continue;
