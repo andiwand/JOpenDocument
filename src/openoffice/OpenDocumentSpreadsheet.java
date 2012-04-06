@@ -3,6 +3,13 @@ package openoffice;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.xml.parsers.SAXParser;
+import javax.xml.parsers.SAXParserFactory;
+
+import org.xml.sax.Attributes;
+import org.xml.sax.SAXException;
+import org.xml.sax.helpers.DefaultHandler;
+
 import xml.Attribute;
 import xml.Document;
 import xml.Node;
@@ -38,22 +45,29 @@ public class OpenDocumentSpreadsheet extends OpenDocument {
 	}
 	
 	public List<String> getTableNames() throws Exception {
-		ArrayList<String> result = new ArrayList<String>();
+		SAXParser parser = SAXParserFactory.newInstance().newSAXParser();
+		TableNamesHandler handler = new TableNamesHandler();
+		parser.parse(getContent(), handler);
+		return handler.getTableNames();
+	}
+	
+	private static class TableNamesHandler extends DefaultHandler {
+		private List<String> tableNames = new ArrayList<String>();
 		
-		SaxDocumentReader reader = new SaxDocumentReader(getContent());
-		Document document = reader.readDocument();
-		Node spreadsheet = document.getRoot().findChildNode("body")
-				.findChildNode("spreadsheet");
-		
-		for (Node node : spreadsheet.getChildNodes()) {
-			if (!node.getName().equals("table")) continue;
-			
-			Attribute name = node.findAttribute("name");
-			if (name == null) result.add("");
-			else result.add(name.getValue());
+		public List<String> getTableNames() {
+			return tableNames;
 		}
 		
-		return result;
+		public void startElement(String uri, String localName, String qName,
+				Attributes attributes) throws SAXException {
+			if (((qName != null) && (qName.length() == 0))
+					&& (localName.length() != 0)) qName = localName;
+			
+			if (!qName.equals("table:table")) return;
+			String name = attributes.getValue("table:name");
+			if (name == null) tableNames.add("");
+			else tableNames.add(name);
+		}
 	}
 	
 }

@@ -39,6 +39,7 @@ public class TestTranslatorOds {
 		int lastDot = htmlFileName.lastIndexOf(".");
 		if (lastDot != -1) htmlFileName = htmlFileName.substring(0, lastDot);
 		htmlFileName += ".html";
+		pageOds.getHtmlDocument();
 		pageOds.save(new File(file.getParentFile(), htmlFileName));
 	}
 	
