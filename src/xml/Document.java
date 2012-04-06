@@ -3,6 +3,7 @@ package xml;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.io.Writer;
 
 
 public class Document extends XmlObject {
@@ -19,17 +20,20 @@ public class Document extends XmlObject {
 		root = document.root.clone();
 	}
 	
-	public String toString() {
-		return root.toString();
-	}
-	
 	// TODO implement
+	@Override
 	public boolean equals(Object object) {
 		return false;
 	}
 	
+	@Override
 	public Document clone() {
 		return new Document(this);
+	}
+	
+	@Override
+	public void write(Writer writer) throws IOException {
+		root.write(writer);
 	}
 	
 	public RootNode getRoot() {

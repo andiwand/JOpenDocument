@@ -10,25 +10,27 @@ import xml.RootNode;
 
 public class HtmlDocument {
 	
-	public final Document htmlDocument;
+	private static final String PREFIX = "htmldocument";
+	
+	public final Document document;
 	
 	public HtmlDocument() {
-		htmlDocument = new Document(new RootNode("html"));
+		document = new Document(new RootNode("html"));
 	}
 	
 	public Document getHtmlDocument() {
-		return htmlDocument;
+		return document;
 	}
 	
 	public RootNode getHtmlNode() {
-		return htmlDocument.getRoot();
+		return document.getRoot();
 	}
 	
 	public void save(File file) throws IOException {
 		FileWriter writer = new FileWriter(file);
 		
 		writer.append("<?xml version=\"1.0\" encoding=\"UTF-8\"?>");
-		writer.append(htmlDocument.toString());
+		document.write(writer);
 		
 		writer.flush();
 		writer.close();
@@ -36,6 +38,12 @@ public class HtmlDocument {
 	
 	public void save(String file) throws IOException {
 		save(new File(file));
+	}
+	
+	public File save() throws IOException {
+		File file = File.createTempFile(PREFIX, "");
+		save(file);
+		return file;
 	}
 	
 }

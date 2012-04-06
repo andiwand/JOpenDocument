@@ -21,22 +21,20 @@ import xml.RootNode;
 // TODO error handling
 public class SaxDocumentReader extends XmlDocumentReader {
 	
-	private InputStream inputStream;
-	private SAXParser parser;
+	private final InputStream inputStream;
+	private final SAXParser parser;
 	
 	public SaxDocumentReader(InputStream inputStream)
 			throws ParserConfigurationException, SAXException {
 		this.inputStream = inputStream;
 		
-		SAXParserFactory parserFactory = SAXParserFactory.newInstance();
-		parser = parserFactory.newSAXParser();
+		parser = SAXParserFactory.newInstance().newSAXParser();
 	}
 	
+	@Override
 	public Document readDocument() throws IOException, SAXException {
 		XmlSaxHandler handler = new XmlSaxHandler();
-		
 		parser.parse(inputStream, handler);
-		
 		return handler.getDocument();
 	}
 	
@@ -54,10 +52,12 @@ public class SaxDocumentReader extends XmlDocumentReader {
 			return document;
 		}
 		
+		@Override
 		public void endDocument() throws SAXException {
 			document = new Document(rootNode);
 		}
 		
+		@Override
 		public void startElement(String uri, String localName, String qName,
 				Attributes attributes) throws SAXException {
 			if (((qName != null) && (qName.length() == 0))
@@ -86,17 +86,17 @@ public class SaxDocumentReader extends XmlDocumentReader {
 			}
 			
 			activeNode = newNode;
-			
 			depth++;
 		}
 		
+		@Override
 		public void endElement(String uri, String localName, String qName)
 				throws SAXException {
 			activeNode = activeNode.getParent();
-			
 			depth--;
 		}
 		
+		@Override
 		public void characters(char[] ch, int start, int length)
 				throws SAXException {
 			String contentString = new String(ch, start, length);

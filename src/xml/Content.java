@@ -1,5 +1,8 @@
 package xml;
 
+import java.io.IOException;
+import java.io.Writer;
+
 public class Content extends Element {
 	
 	private String content;
@@ -16,10 +19,12 @@ public class Content extends Element {
 		this(content.content);
 	}
 	
+	@Override
 	public String toString() {
 		return content;
 	}
 	
+	@Override
 	public boolean equals(Object object) {
 		if (object == null) return false;
 		if (object == this) return true;
@@ -29,8 +34,14 @@ public class Content extends Element {
 		return this.content.equals(content.content);
 	}
 	
+	@Override
 	public Element clone() {
 		return new Content(this);
+	}
+	
+	@Override
+	public void write(Writer writer) throws IOException {
+		writer.append(content);
 	}
 	
 	public String getContent() {

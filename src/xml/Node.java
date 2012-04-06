@@ -1,5 +1,7 @@
 package xml;
 
+import java.io.IOException;
+import java.io.Writer;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
@@ -57,42 +59,40 @@ public class Node extends Element {
 		}
 	}
 	
-	public String toString() {
-		StringBuilder builder = new StringBuilder();
-		
-		builder.append("<");
+	@Override
+	public void write(Writer writer) throws IOException {
+		writer.append("<");
 		
 		if (namespace != null) {
-			builder.append(namespace);
-			builder.append(":");
+			writer.append(namespace);
+			writer.append(":");
 		}
 		
-		builder.append(name);
+		writer.append(name);
 		
 		for (Attribute attribute : attributes) {
-			builder.append(" ");
-			builder.append(attribute);
+			writer.append(" ");
+			attribute.write(writer);
 		}
 		
-		builder.append(">");
+		writer.append(">");
 		
 		for (Element child : children) {
-			builder.append(child.toString());
+			child.write(writer);
 		}
 		
-		builder.append("</");
+		writer.append("</");
 		
 		if (namespace != null) {
-			builder.append(namespace);
-			builder.append(":");
+			writer.append(namespace);
+			writer.append(":");
 		}
 		
-		builder.append(name);
-		builder.append(">");
-		
-		return builder.toString();
+		writer.append(name);
+		writer.append(">");
 	}
 	
+	@Override
 	public boolean equals(Object object) {
 		if (object == null) return false;
 		if (object == this) return true;
@@ -102,6 +102,7 @@ public class Node extends Element {
 		return name.equals(node.name);
 	}
 	
+	@Override
 	public Element clone() {
 		return new Node(this);
 	}

@@ -18,10 +18,12 @@ public class RootNode extends Node {
 		super(rootNode);
 	}
 	
+	@Override
 	public RootNode clone() {
 		return new RootNode(this);
 	}
 	
+	@Override
 	public boolean setParent(Node newParent) {
 		return false;
 	}

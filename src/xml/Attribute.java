@@ -1,5 +1,7 @@
 package xml;
 
+import java.io.IOException;
+import java.io.Writer;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -56,22 +58,7 @@ public class Attribute extends XmlObject {
 		this(attribute.getQName(), attribute.value);
 	}
 	
-	public String toString() {
-		StringBuilder builder = new StringBuilder();
-		
-		if (namespace != null) {
-			builder.append(namespace);
-			builder.append(":");
-		}
-		
-		builder.append(name);
-		builder.append("=\"");
-		builder.append(value);
-		builder.append("\"");
-		
-		return builder.toString();
-	}
-	
+	@Override
 	public boolean equals(Object object) {
 		if (object == null) return false;
 		if (object == this) return true;
@@ -81,8 +68,22 @@ public class Attribute extends XmlObject {
 		return name.equals(attribute.name) && value.equals(attribute.value);
 	}
 	
+	@Override
 	public Attribute clone() {
 		return new Attribute(this);
+	}
+	
+	@Override
+	public void write(Writer writer) throws IOException {
+		if (namespace != null) {
+			writer.append(namespace);
+			writer.append(":");
+		}
+		
+		writer.append(name);
+		writer.append("=\"");
+		writer.append(value);
+		writer.append("\"");
 	}
 	
 	public Node getNode() {

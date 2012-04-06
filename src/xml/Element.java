@@ -6,10 +6,10 @@ public abstract class Element extends XmlObject {
 	
 	public Element() {}
 	
-	public abstract String toString();
-	
+	@Override
 	public abstract boolean equals(Object object);
 	
+	@Override
 	public abstract Element clone();
 	
 	public boolean hasParent() {
@@ -25,7 +25,6 @@ public abstract class Element extends XmlObject {
 		parent = newParent;
 		
 		if (newParent == null) return true;
-		
 		newParent.children.add(this);
 		
 		return true;
